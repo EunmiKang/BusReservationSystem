@@ -1,0 +1,74 @@
+@font-face{font-family:'BM11';src:url("/SE/font/BMHANNA_11yrs_ttf.ttf")}
+
+body {
+	background-image: url("/SE/img/background.png");
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+
+#busInquiryForm {
+    margin: auto;
+    width: 300px;
+	border: 5px solid black;
+    margin-bottom: 10%;
+    padding: 50px;
+}
+
+h1 {
+	width: 300px;
+	margin: auto;
+	margin-top: 10%;
+	margin-bottom: 10px;
+	text-align: center;
+	font-family: 'BM11';
+	cursor: default;
+}
+
+h2 {
+	width: 100%;
+	text-align: center;
+	font-family: 'BM11';
+	cursor: default;
+}
+
+#infoTable {
+	width: 300px;
+	margin: 50px 0px 20px 0px;
+}
+
+.left {
+	width: 30%;
+    height: 30px;
+    text-align: center;
+    font-family: 'BM11';
+	cursor: default;
+	font-size: 15pt;
+}
+
+.right {
+	width: 90%;
+	height: 30px;
+	font-family: 'BM11';
+}
+
+#tdInquiryBtn {
+	text-align: center;
+}
+
+#inquiryBtn {
+	width: 120px;
+	height: 40px;
+	font-size: 15pt;
+	background-color: #cce6ff;
+	border: 2px solid #cce6ff;
+	margin-top: 30px;
+	border-radius: 5px;
+	font-family: 'BM11';
+}
+
+#inquiryBtn:hover {
+	color: black;
+	background-color: white;
+	border: 2px solid #cce6ff;
+	cursor: pointer;
+}

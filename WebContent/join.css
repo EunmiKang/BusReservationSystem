@@ -1,0 +1,71 @@
+@font-face{font-family:'BM11';src:url("/SE/font/BMHANNA_11yrs_ttf.ttf")}
+
+body {
+	background-image: url("/SE/img/background.png");
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+
+#joinForm {
+	width: 300px;
+	margin: auto;
+	margin-bottom: 10%;
+	border: 5px solid black;
+	padding: 50px;
+}
+
+h1 {
+	width: 300px;
+	margin: auto;
+	margin-top: 10%;
+	margin-bottom: 10px;
+	text-align: center;
+	font-family: 'BM11';
+	cursor: default;
+}
+
+h2 {
+	width: 300px;
+	margin: auto;
+	margin-bottom: 10px;
+	text-align: center;
+	font-family: 'BM11';
+	cursor: default;
+}
+
+input {
+	border: 0px;
+	padding: 5px;
+	height: 30px;
+}
+
+.left {
+	width: 30%;
+    height: 30px;
+    text-align: center;
+	background-color: #e6f3ff;
+	font-family: 'BM11';
+	cursor: default;
+	font-size: 15pt;
+}
+
+.right {
+	width: 90%;
+	height: 30px;
+}
+
+#joinBtn{
+	width: 280px;
+	height: 45px;
+	background-color: #cce6ff;
+	font-size: 17pt;
+	border: 2px solid #cce6ff;
+	font-family: 'BM11';
+	margin-top: 10%;
+}
+
+#joinBtn:hover {
+	background-color: white;
+	border: 2px solid #cce6ff;
+	cursor: pointer;
+}

@@ -1,0 +1,90 @@
+@font-face{font-family:'BM11';src:url("/SE/font/BMHANNA_11yrs_ttf.ttf")}
+
+body {
+	background-image: url("/SE/img/background.png");
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+
+#main {
+	width: 600px;
+    margin: auto;
+    border: 5px solid black;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    padding: 30px;
+}
+
+#loginForm {
+	margin: auto;
+	margin-top: 130px;
+	margin-bottom: 100px;
+}
+
+#btnTable {
+	margin: auto;
+}
+
+h1 {
+	width: 280px;
+    margin: auto;
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: 'BM11';
+    cursor: default;
+}
+
+.tdInput {
+	margin: 5px;
+}
+
+.tdText {
+	font-size: 15pt;
+    text-align: center;
+    font-family: 'BM11';
+    cursor: default;
+}
+
+.inputForm {
+	padding: 5px;
+	height: 20px;
+	background-color: #f2f2f2;
+	margin: 0px 15px 0px 5px;
+}
+
+.btn {
+	width: 150px;
+    height: 100px;
+    background-color: #cce6ff;
+    margin: 5px;
+    font-size: 20pt;
+    text-align: center;
+    border-radius: 7px;
+    border: 2px solid #cce6ff;
+    font-family: 'BM11';
+    cursor: pointer;
+}
+
+#loginBtn {
+	width: 100px;
+    height: 100px;
+    background-color: #cce6ff;
+    font-size: 17pt;
+    border-radius: 7px;
+    border: 2px solid #cce6ff;
+    font-family: 'BM11';
+    cursor: pointer;
+}
+
+/* 踰꾪듉�뿉 而ㅼ꽌媛� �삱�씪媛붿쓣 �븣 援щ텇�빐二쇨린 �쐞�븿 */
+#loginBtn:hover {
+	color: #cce6ff;
+	background-color: gray;
+	border: 2px solid #cce6ff;
+}
+
+.btn:hover {
+	color: #cce6ff;
+	background-color: gray;
+	border: 2px solid #cce6ff;
+}

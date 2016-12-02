@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title> 버스 예매 시스템</title>
+	<link type="text/css" rel="stylesheet" href="main.css"/>
+	<script src="main.js"></script>
+</head>
+
+<body>
+	<div id="main">
+		<h1>BUS TAJA</h1>
+		<form action="login.jsp" method="post">
+			<table id="loginForm">
+				<tr>
+					<td class="tdText">아이디</td>
+					<td class="tdInput">
+						<input class="inputForm" type="text" name="ID"/>
+					</td>
+					<td rowspan="2">
+						<input id="loginBtn" type="submit" value="Login"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="tdText">비밀번호</td>
+					<td class="tdInput">
+						<input class="inputForm" type="password" name="PW"/>
+					</td>
+				</tr>
+			</table>
+		</form>
+		
+		<table id="btnTable">
+			<tr>
+				<td>
+					<!-- 회원가입 버튼 -->
+					<button class="btn" onclick="goJoin()">회원 가입</button>
+				</td>
+				<td>
+					<!-- 배차조회 버튼 -->
+					<button class="btn" onclick="goBusInquiry()">배차 조회</button>
+				</td>
+			</tr>
+		</table>
+		
+	</div>
+</body>
+</html>
