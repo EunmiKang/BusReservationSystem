@@ -8,12 +8,13 @@
 	<title>버스 예매 시스템</title>
 	<link type="text/css" rel="stylesheet" href="memberMain.css"/>
 	<script src="memberMain.js"></script>
+	<script src="logout.js"></script>
 </head>
 <body>
 	<table id="memberMainForm">
 		<tr>
 			<td id="tdLogoutBtn" colspan="3">
-				<input id="logoutBtn" type="button" value="logout"/>
+				<input id="logoutBtn" type="button" value="logout" onclick="logout()"/>
 			</td>
 		</tr>
 		<tr>
