@@ -1,5 +1,5 @@
 function goJoin() {
-	location.href = "join.jsp";
+	location.href = "join.html";
 }
 
 function goBusInquiry() {
