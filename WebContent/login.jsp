@@ -31,8 +31,12 @@
 		location.href = "adminPage.html";
 	</script>
 	<%	
-	}else
+	}else//로그인 성공시
 	{
+		//session 등록
+		session.setAttribute("ID", ID);
+		session.setAttribute("PW", PW);
+		//response.sendRedirect("memberMain.jsp");
 		%>
 		<script>
 			location.href = "memberMain.jsp";

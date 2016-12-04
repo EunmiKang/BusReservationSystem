@@ -149,5 +149,23 @@ public class USERDAO {
 		
 		return 1;	
 	}
-
+	
+	public String selectUserInfo(){
+		String userInfo=null;
+		Connection conn = null;
+		ResultSet rs = null;
+		DAO dao = new DAO();
+		dao.createConn();
+		conn = dao.getConn();
+		try{
+			rs = dao.select(conn, "SELECT * FROM MEMBER WHERE M_ID = \'"+USERID+"\'");
+			if(rs.next()==true){
+				userInfo = rs.getString("M_ID")+":"+rs.getString("M_PW")+":"+rs.getString("M_NAME")
+					+":"+rs.getString("M_PHONENUM")+":"+rs.getString("M_CURRENTPOINT");
+			}
+		}catch(Exception e){
+			System.out.println("[*]	SELECT error: \n" + e.getMessage());
+		}
+		return userInfo;
+	}
 }
