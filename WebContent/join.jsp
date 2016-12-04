@@ -24,16 +24,20 @@
 	String name = request.getParameter("nameInput");
 	String phoneNum = request.getParameter("PhoneNum");
 	
-	Connection conn = null;
-	DatabaseMetaData meta = null;
-	DAO dao = new DAO();
-	dao.createConn();
-	conn = dao.getConn();		// 데이터베이스 연결 정보 취득
-	meta = dao.getDBMD(conn);	// 데이터베이스 메타정보 취득
-	try {
-		System.out.println(meta.getTimeDateFunctions());
-		System.out.println(meta.getUserName());
-	} catch (Exception e) {
-		System.out.println("[*]	메타정보 출력 오류 발생: \n" + e.getMessage());
-	}
+	
+	USERDAO userDAO = new USERDAO(ID, PW, name, phoneNum, "0", "0");
+	if(userDAO.userJoin() == false){
+		%>
+		<script>
+			alert("이미 존재하는 ID입니다.");
+			location.href = "join.html";
+		</script>
+		<%	
+	}else
+		%>
+		<script>
+			alert("회원가입을 성공했습니다.");
+			location.href = "main.html";
+		</script>
+		<%
 %>

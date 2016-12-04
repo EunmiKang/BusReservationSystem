@@ -1,6 +1,16 @@
+<%@page import="DAO.USERDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%
+	String ID = (String)session.getAttribute("ID");
+	String PW = (String)session.getAttribute("PW");
+	String userInfo=null;
+	USERDAO dao = new USERDAO(ID,PW);
+	userInfo = dao.selectUserInfo();
+	String[] info = userInfo.split(":");
+	//out.print(info[0]);
+%>
 <html>
 <head>
 	<meta charset="UTF-8">
@@ -18,30 +28,37 @@
 				<td class="left">아이디</td>
 				<td class="right">
 					<!--jsp 사용해서 아이디 가져오기 - jsp로 바꿔 이파일-->
+					<%=info[0] %>
 				</td>
 			</tr>
 			<tr>
 				<td class="left">비밀번호</td>
 				<td>
-					<input type="password" class="right"/><!--jsp 사용해서 비밀번호 가져오기-->
+					<input type="text" class="right" value="<%=info[1] %>"/>
+					<!--jsp 사용해서 비밀번호 가져오기-->
+					
 				</td>
 			</tr>
 			<tr>
 				<td class="left">이름</td>
 				<td class="right">
-					<!--jsp 사용해서 이름 가져오기-->
+				<%=info[2] %>
 				</td>
 			</tr>
 			<tr>
 				<td class="left">전화번호</td>
 				<td>
-					<input type="text" class="right"/><!--jsp 사용해서 전화번호 가져오기-->
+					<input type="text" class="right" value="<%=info[3] %>"/>
+					<!--jsp 사용해서 전화번호 가져오기-->
+					
+					
 				</td>
 			</tr>
 			<tr>
 				<td class="left">포인트</td>
 				<td class="right">
 					<!--jsp 사용해서 포인트 가져오기-->
+					<%=info[4] %>
 				</td>
 			</tr>
 			<tr>
