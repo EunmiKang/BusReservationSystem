@@ -21,5 +21,4 @@
 	} catch (Exception e) {
 		System.out.println("[*]	메타정보 출력 오류 발생: \n" + e.getMessage());
 	}
-	
 %>
