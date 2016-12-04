@@ -8,9 +8,10 @@
 	request.setCharacterEncoding("UTF-8");
 	String ID = request.getParameter("ID");
 	String PW = request.getParameter("PW");
+	
+	DAO dao = new DAO();
 	Connection conn = null;
 	DatabaseMetaData meta = null;
-	USERDAO dao = new USERDAO();
 	dao.createConn();
 	conn = dao.getConn();		// 데이터베이스 연결 정보 취득
 	meta = dao.getDBMD(conn);	// 데이터베이스 메타정보 취득
