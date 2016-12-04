@@ -9,11 +9,11 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class USERDAO {
+public class DAO {
 
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private static final String URL = "jdbc:oracle:thin:@168.188.128.130:1521:DB14";
-	private static final String USER = "system";
+	private static final String USER = "DBJS";
 	private static final String PASS = "DBSERVER";
 
 	private static Connection conn = null;
@@ -64,13 +64,12 @@ public class USERDAO {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(query);
 			rsMeta = rs.getMetaData();
-
+			
 			for (int col = 1; col <= rsMeta.getColumnCount(); col++) {
 				int type = rsMeta.getColumnType(col);
 				String typeName = rsMeta.getColumnTypeName(col);
 				String name = rsMeta.getColumnName(col);
-				System.out
-						.println(col + "st column " + name + " is JDBC type " + type + " which is called " + typeName);
+				//System.out.println(col + "st column " + name + " is JDBC type " + type + " which is called " + typeName);
 			}
 
 			// 질의 결과 반환
