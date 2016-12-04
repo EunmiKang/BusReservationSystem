@@ -9,16 +9,34 @@
 	String ID = request.getParameter("ID");
 	String PW = request.getParameter("PW");
 	
-	DAO dao = new DAO();
-	Connection conn = null;
-	DatabaseMetaData meta = null;
-	dao.createConn();
-	conn = dao.getConn();		// 데이터베이스 연결 정보 취득
-	meta = dao.getDBMD(conn);	// 데이터베이스 메타정보 취득
-	try {
-		System.out.println(meta.getTimeDateFunctions());
-		System.out.println(meta.getUserName());
-	} catch (Exception e) {
-		System.out.println("[*]	메타정보 출력 오류 발생: \n" + e.getMessage());
+	USERDAO userDAO = new USERDAO(ID, PW);
+	int result = userDAO.userLogin();
+	if(result == 0){
+		%>
+		<script>
+			alert("존재하지 않는 ID입니다.");
+			location.href = "main.html";
+		</script>
+		<%	
+	}else if(result == 2){
+		%>
+		<script>
+			alert("비밀번호가 틀렸습니다.");
+			location.href = "main.html";
+		</script>
+		<%	
+	}else if(result == 3){
+		%>
+	<script>
+		location.href = "adminPage.html";
+	</script>
+	<%	
+	}else
+	{
+		%>
+		<script>
+			location.href = "memberMain.jsp";
+		</script>
+		<%	
 	}
 %>

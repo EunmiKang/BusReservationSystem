@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title> 버스 예매 시스템 </title>
 	<link type="text/css" rel="stylesheet" href="join.css"/>
+	<script type="text/javascript" src = "join.js"></script>
 </head>
 
 <body>
@@ -11,7 +12,7 @@
 	<div id="joinForm">
 		<h2> 회원 가입 </h2>
 		<!-- 회원가입 form - ID, PW, 이름, 전화번호를 입력 -->
-		<form action="join.jsp" method="post">
+		<form name="joinForm" onsubmit="return check()" action="join.jsp" method="post">
 			<table>
 				<tr>
 					<td class="left">아이디</td>
