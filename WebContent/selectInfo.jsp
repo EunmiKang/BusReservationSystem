@@ -15,14 +15,14 @@
 
 <body>
 	<h1 onclick="goMemberMain()">BUS TAJA</h1>
-	<form action="selectInfo.jsp" method="post" id="selectInfoForm">
+	<form action="getSchedule.jsp" method="post" id="selectInfoForm">
 		<h2>승차권 예매</h2>
-		<table>
+		<table id="selectInfoTable">
 			<tr>
 				<td class="left">출발지</td>
 				<td>
 					<select name="departure" form="selectInfoForm" class="right">
-						<option value="ex">Ex</option> <!--그 여기는 jsp쓰던지해야돼-->
+						<option value="ex">Ex</option>
 					</select>
 				</td>
 			</tr>
@@ -30,27 +30,30 @@
 				<td class="left">도착지</td>
 				<td>
 					<select name="arrival" form="selectInfoForm" class="right">
-						<option value="ex">Ex</option> <!--그 여기는 jsp쓰던지해야돼-->
+						<option value="ex">Ex</option>
 					</select>
 				</td>
 			</tr>
 			<tr>
 				<td class="left">출발날짜</td>
 				<td>
-					<input type="date" style="width:85%; height: 25px;"/>
+					<input type="date" name="departureDate" style="width:85%; height: 25px;"/>
 				</td>
 			</tr>
 			<tr>
 				<td class="left">출발시간</td>
 				<td>
-					<input style="width:70%; height:25px;"/><span> 이후</span>
+					<input type="time" name="departureTime" style="width:70%; height:25px;"/><span> 이후</span>
 				</td>
 			</tr>
 			<tr>
 				<td class="left">버스등급</td>
 				<td>
 					<select name="busClass" form="selectInfoForm" class="right">
-						<option value="ex">Ex</option> <!--그 여기는 jsp쓰던지해야돼-->
+						<option value="전체등급">전체등급</option>
+						<option value="일반">일반</option>
+						<option value="우등">우등</option>
+						<option value="프리미엄">프리미엄</option>
 					</select>
 				</td>
 			</tr>

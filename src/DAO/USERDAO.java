@@ -132,16 +132,16 @@ public class USERDAO {
 			rs = dao.select(conn, "SELECT M_ID,M_PW FROM MEMBER WHERE M_ID = \'"+USERID+"\'");
 			if(rs.next()==false)
 			{
-				return 0;//IDê°€ ì¡´ì¬í•˜ì§€ ì•Šì„ ë•Œ
+				return 0;//ID°¡ Á¸ÀçÇÏÁö ¾ÊÀ» ¶§
 			}else
 			{
 				if(rs.getString("M_PW").equals(USERPW)){
 					if(rs.getString("M_ID").equals("ADMIN"))
-						return 3;//ê´€ë¦¬ì ì¼ë•Œ login//
+						return 3;//°ü¸®ÀÚÀÏ‹š
 					return 1;//login!
 				}
 				else
-					return 2;//PW í‹€ë¦¼
+					return 2;//PW Æ²·ÈÀ» ¶§
 			}
 		}catch(Exception e){
 			System.out.println("[*] LOGIN SELECT result error: \n" + e.getMessage());
