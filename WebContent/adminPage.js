@@ -34,3 +34,7 @@ function add()
 	
 	document.getElementById("scheduleTable").appendChild(tr);
 }
+
+function testPlz(val) {
+	document.getElementById("testForm").submit();
+}
