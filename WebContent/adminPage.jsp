@@ -1,6 +1,6 @@
 <%@page import="DAO.HOSTDAO"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="DAO.SCHEDULEINFO"%>
+<%@page import="DAO.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.io.*" %>
@@ -9,9 +9,14 @@
 <%
 	String HOSTID = (String)session.getAttribute("ID");
 	String HOSTPW = (String)session.getAttribute("PW");
-	List<SCHEDULEINFO> scheduleInfoList = new ArrayList<>(); 
+	
+	List<SCHEDULEINFO> scheduleInfoList = new ArrayList<>();
+	List<FROMTODAO> fromToList = new ArrayList<>();
+	
 	HOSTDAO hostDao = new HOSTDAO(HOSTID,HOSTPW);
+	
 	scheduleInfoList = hostDao.loadSchedule();
+	fromToList = hostDao.loadDepartureTerminal();
 	String scheduleInfoStr = null;
 	String[] str = new String[6];
 %>
@@ -20,22 +25,39 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title> 관리자 페이지 </title>
 	<link type="text/css" rel="stylesheet" href="adminPage.css"/>
-	<script>
-	
-	</script>
+	<script src="adminPage.js"></script>
 </head>
 <body>
-	<form>
+	<form name = "addScheduleForm">
 		<table id="addTable">
 			<tr>
 				<td class="left">출발지</td>
 				<td>
-					<input type="text" class="right" name="departure"/>
+					<select id ="departure"name="departure" form="addScheduleForm" class="right">
+					<%
+						for(int i=0; i<fromToList.size(); i++){
+							out.println("<option value='"+i+"'>"
+									+fromToList.get(i).getDepartureTerminal()+"</option>");
+						}
+					%>
+					
+					</select>
+					<input type="hidden" id = "departureresult" name="folderName" value="">
 				</td>
-				
+				<script>
+					document.getElementById("departure").value;
+				</script>
 				<td class="left">도착지</td>
 				<td>
-					<input type="text" class="right" name="arrival"/>
+					<select name="arrival" form="addScheduleForm" class="right">
+					<%
+						for(int i=0; i<fromToList.size(); i++){
+							
+							out.println("<option value='"+i+"'>"
+									+fromToList.get(i).getDepartureTerminal()+"</option>");
+						}
+					%>
+					</select>
 				</td>
 				
 				<td class="left">출발시간</td>
