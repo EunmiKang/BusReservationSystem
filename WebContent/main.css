@@ -19,6 +19,7 @@ body {
 	margin: auto;
 	margin-top: 130px;
 	margin-bottom: 100px;
+	text-align: center;
 }
 
 #btnTable {
@@ -66,8 +67,9 @@ h1 {
 }
 
 #loginBtn {
-	width: 100px;
-    height: 100px;
+	width: 80%;
+    height: 40px;
+    margin-top: 10px;
     background-color: #cce6ff;
     font-size: 17pt;
     border-radius: 7px;
@@ -76,7 +78,6 @@ h1 {
     cursor: pointer;
 }
 
-/* 踰꾪듉�뿉 而ㅼ꽌媛� �삱�씪媛붿쓣 �븣 援щ텇�빐二쇨린 �쐞�븿 */
 #loginBtn:hover {
 	color: #cce6ff;
 	background-color: gray;

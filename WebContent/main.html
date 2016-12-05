@@ -13,20 +13,22 @@
 		<form action="login.jsp" method="post">
 			<table id="loginForm">
 				<tr>
-					<td class="tdText">아이디</td>
-					<td class="tdInput">
-						<input class="inputForm" type="text" name="ID"/>
-					</td>
-				</tr>
-				<tr>
-					<td class="tdText">비밀번호</td>
-					<td class="tdInput">
-						<input class="inputForm" type="password" name="PW"/>
-					</td>
-					<td rowspan="2">
-						<input id="loginBtn" type="submit" value="Login"/>
-					</td>
-				</tr>
+	               <td class="tdText">아이디</td>
+	               <td class="tdInput">
+	                  <input class="inputForm" type="text" name="ID" required/>
+	               </td>
+	            </tr>
+	            <tr>
+	               <td class="tdText">비밀번호</td>
+	               <td class="tdInput">
+	                  <input class="inputForm" type="password" name="PW" required/>
+	               </td>
+	            </tr>
+	            <tr>
+	            	<td colspan="2">
+                		<input id="loginBtn" type="submit" value="Login"/>
+                	</td>
+               	</tr>
 			</table>
 		</form>
 		

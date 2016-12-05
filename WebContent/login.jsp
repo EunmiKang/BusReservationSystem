@@ -28,7 +28,7 @@
 	}else if(result == 3){
 		%>
 	<script>
-		location.href = "adminPage.html";
+		location.href = "adminPage.jsp";
 	</script>
 	<%	
 	}else//로그인 성공시

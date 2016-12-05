@@ -4,38 +4,42 @@
 	<meta charset="UTF-8">
 	<title> 버스 예매 시스템 </title>
 	<link type="text/css" rel="stylesheet" href="join.css"/>
-	<script type="text/javascript" src = "join.js"></script>
+	<script>
+		function goMain() {
+			location.href = "main.html";
+		}
+	</script>
 </head>
 
 <body>
-	<h1>BUS TAJA</h1>
+	<h1 onclick="goMain()">BUS TAJA</h1>
 	<div id="joinForm">
 		<h2> 회원 가입 </h2>
 		<!-- 회원가입 form - ID, PW, 이름, 전화번호를 입력 -->
-		<form name="joinForm" onsubmit="return check()" action="join.jsp" method="post">
+		<form name="joinForm" action="join.jsp" method="post">
 			<table>
 				<tr>
 					<td class="left">아이디</td>
 					<td>
-						<input type="text" name="ID" class="right"/>
+						<input type="text" name="ID" class="right" required/>
 					</td>
 				</tr>
 				<tr>
 					<td class="left">비밀번호</td>
 					<td>
-						<input type="password" name="PW" class="right"/>
+						<input type="password" name="PW" class="right" required/>
 					</td>
 				</tr>
 				<tr>
 					<td class="left"> 이 름 </td>
 					<td>
-						<input type="text" name="nameInput" class="right"/>
+						<input type="text" name="nameInput" class="right" required/>
 					</td>
 				</tr>
 				<tr>
 					<td class="left"> 전화번호 </td>
 					<td>
-						<input type="text" name="PhoneNum" class="right" placeholder="ex)000-0000-0000"/>
+						<input type="text" name="PhoneNum" class="right" placeholder="ex)000-0000-0000" required/>
 					</td>
 				</tr>
 					

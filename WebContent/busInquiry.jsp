@@ -6,10 +6,15 @@
 	<meta charset="UTF-8">
 	<title>버스 예매 시스템</title>
 	<link type="text/css" rel="stylesheet" href="busInquiry.css"/>
+	<script>
+		function goMain() {
+			location.href = "main.html";
+		}
+	</script>
 </head>
 
 <body>
-	<h1>BUS TAJA</h1>
+	<h1 onclick="goMain()">BUS TAJA</h1>
 	<form action="busInquiry.jsp" method="post" id="busInquiryForm">
 		<h2>배차 조회</h2>
 		<table id="infoTable">

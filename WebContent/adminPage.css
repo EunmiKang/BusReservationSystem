@@ -1,0 +1,23 @@
+@font-face{font-family:'BM11';src:url("/SE/font/BMHANNA_11yrs_ttf.ttf")}
+
+body {
+	background-image: url("/SE/img/background.png");
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+
+#addTable {
+	width: 100%;
+}
+
+#scheduleTable {
+	margin: 3%;
+	width: 70%;
+	border-collapse: collapse;
+	border-top: 5px solid black;
+	border-bottom: 5px solid black;
+}
+
+th {
+	margin: 5px;
+}

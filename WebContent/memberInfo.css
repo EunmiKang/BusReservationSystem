@@ -42,7 +42,11 @@ h1 {
 	margin-bottom: 10px;
 	text-align: center;
 	font-family: 'BM11';
-	cursor: default;
+}
+
+h1:hover {
+	color: gray;
+	cursor: pointer;
 }
 
 h2 {
