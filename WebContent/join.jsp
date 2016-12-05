@@ -17,13 +17,11 @@
 
 <% 
 	request.setCharacterEncoding("UTF-8");
-
 	/* join.html에서 넘긴 parameter들 받아옴 */
 	String ID = request.getParameter("ID");
 	String PW = request.getParameter("PW");
 	String name = request.getParameter("nameInput");
 	String phoneNum = request.getParameter("PhoneNum");
-	
 	
 	USERDAO userDAO = new USERDAO(ID, PW, name, phoneNum, "0", "0");
 	if(userDAO.userJoin() == false){

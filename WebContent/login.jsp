@@ -27,6 +27,9 @@
 		<%	
 	}else if(result == 3){
 		%>
+		//session 등록
+		session.setAttribute("ID", ID);
+		session.setAttribute("PW", PW);
 	<script>
 		location.href = "adminPage.jsp";
 	</script>
