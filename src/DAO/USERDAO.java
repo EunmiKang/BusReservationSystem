@@ -14,7 +14,7 @@ public class USERDAO {
 	private String USERTOTAL_POINT = null;
 	private String USERCURRENT_POINT = null;
 
-	public USERDAO(String USERID, String USERPW, String USERPHONENUM, String USERNAME, String USERTOTAL_POINT,
+	public USERDAO(String USERID, String USERPW, String USERNAME, String USERPHONENUM, String USERTOTAL_POINT,
 			String USERCURRENT_POINT) {
 		super();
 		this.USERID = USERID;
@@ -110,12 +110,12 @@ public class USERDAO {
 						+ " VALUES('"+USERID+"','"+USERPW+"','"+USERNAME+"','"+USERPHONENUM+"',0,0)");
 	
 				}catch(Exception e){
-					System.out.println("[*]	INSERT error: \n" + e.getMessage());
+					System.out.println("[*]	JOIN INSERT error: \n" + e.getMessage());
 				}
 				return true;
 			}
 		} catch (Exception e) {
-			System.out.println("[*]	SELECT error: \n" + e.getMessage());
+			System.out.println("[*]	JOIN SELECT error: \n" + e.getMessage());
 		}
 		return false;
 	}
@@ -144,7 +144,7 @@ public class USERDAO {
 					return 2;//PW 틀림
 			}
 		}catch(Exception e){
-			System.out.println("[*]	SELECT error: \n" + e.getMessage());
+			System.out.println("[*] LOGIN SELECT result error: \n" + e.getMessage());
 		}
 		
 		return 1;	
@@ -164,8 +164,46 @@ public class USERDAO {
 					+":"+rs.getString("M_PHONENUM")+":"+rs.getString("M_CURRENTPOINT");
 			}
 		}catch(Exception e){
-			System.out.println("[*]	SELECT error: \n" + e.getMessage());
+			System.out.println("[*] SELECTUSERINFO SELECT error: \n" + e.getMessage());
 		}
 		return userInfo;
+	}
+	
+	public boolean deactivateAccount(){
+		String userInfo=null;
+		Connection conn = null;
+		boolean rs = false;
+		DAO dao = new DAO();
+		dao.createConn();
+		conn = dao.getConn();
+		try{
+			rs = dao.delete(conn, "DELETE FROM MEMBER WHERE M_ID = \'"+USERID+"\'");
+			if(rs == true)
+				return true;
+			else
+				return false;
+		}catch(Exception e){
+			System.out.println("[*]	DEACTIVATEACCOUNT DELETE error: \n" + e.getMessage());
+		}
+		return false;
+	}
+	
+	public boolean changeUserSetting(String changePW, String changePhoneNum){
+		String userInfo=null;
+		Connection conn = null;
+		ResultSet rs = null;
+		DAO dao = new DAO();
+		dao.createConn();
+		conn = dao.getConn();
+		try{
+			//rs = dao.select(conn, "SELECT * FROM MEMBER WHERE M_ID = \'"+USERID+"\'");
+			//Connection conn, String table, String col, String changevalue, String condition
+			dao.updateBranch(conn, "MEMBER", "M_PW", changePW, "M_ID = \'"+USERID+"\'");
+			dao.updateBranch(conn, "MEMBER", "M_PHONENUM", changePhoneNum, "M_ID = \'"+USERID+"\'");
+			return true;
+		}catch(Exception e){
+			System.out.println("[*] changeUserSetting CHANGE error: \n" + e.getMessage());
+		}
+		return false;
 	}
 }
