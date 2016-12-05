@@ -81,14 +81,13 @@ public class DAO {
 		return rs;
 	}
 
-	public boolean updateBranch(Connection conn, String branch_number, int asset) {
+	public boolean updateBranch(Connection conn, String table, String col, String changevalue, String condition) {
 		try {
-			PreparedStatement pstmt = conn.prepareStatement("UPDATE BRANCH SET ASSETS = ? WHERE BRANCH_NUMBER = ?");
-
-			pstmt.setInt(1, asset);
-			pstmt.setString(2, branch_number);
-
-			int rowCount = pstmt.executeUpdate();
+			Statement stmt = conn.createStatement();
+			int rowCount = stmt.executeUpdate("UPDATE "+table 
+					+" SET "+col +" = \'"+changevalue
+					+"\' WHERE "+condition);
+		
 			if (rowCount == 0) {
 				System.out.println("data modify fail");
 			} else {
