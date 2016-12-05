@@ -5,6 +5,7 @@ public class TERMINALDAO {
 	private String address = null;
 	private String teleNum = null;
 	private String busClass = null;
+	
 	public String getTerminalName() {
 		return terminalName;
 	}

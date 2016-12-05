@@ -132,16 +132,16 @@ public class USERDAO {
 			rs = dao.select(conn, "SELECT M_ID,M_PW FROM MEMBER WHERE M_ID = \'"+USERID+"\'");
 			if(rs.next()==false)
 			{
-				return 0;//ID°¡ Á¸ÀçÇÏÁö ¾ÊÀ» ¶§
+				return 0;//IDï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 			}else
 			{
 				if(rs.getString("M_PW").equals(USERPW)){
 					if(rs.getString("M_ID").equals("ADMIN"))
-						return 3;//°ü¸®ÀÚÀÏ‹š
+						return 3;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï‹ï¿½
 					return 1;//login!
 				}
 				else
-					return 2;//PW Æ²·ÈÀ» ¶§
+					return 2;//PW Æ²ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 			}
 		}catch(Exception e){
 			System.out.println("[*] LOGIN SELECT result error: \n" + e.getMessage());
@@ -196,8 +196,6 @@ public class USERDAO {
 		dao.createConn();
 		conn = dao.getConn();
 		try{
-			//rs = dao.select(conn, "SELECT * FROM MEMBER WHERE M_ID = \'"+USERID+"\'");
-			//Connection conn, String table, String col, String changevalue, String condition
 			dao.updateBranch(conn, "MEMBER", "M_PW", changePW, "M_ID = \'"+USERID+"\'");
 			dao.updateBranch(conn, "MEMBER", "M_PHONENUM", changePhoneNum, "M_ID = \'"+USERID+"\'");
 			return true;
