@@ -1,24 +1,28 @@
 package DAO;
 
+import java.util.*;
+
 public class FROMTODAO {
-	private String arrivalTerminal = null;
-	private String departureTerminal = null;
-	public String getArrivalTerminal() {
-		return arrivalTerminal;
-	}
-	public void setArrivalTerminal(String arrivalTerminal) {
-		this.arrivalTerminal = arrivalTerminal;
-	}
+	private String  departureTerminal= null;
+	private List<String> arrivalTerminal = null;
 	public String getDepartureTerminal() {
 		return departureTerminal;
 	}
 	public void setDepartureTerminal(String departureTerminal) {
 		this.departureTerminal = departureTerminal;
 	}
-	public FROMTODAO(String arrivalTerminal, String departureTerminal) {
-		super();
-		this.arrivalTerminal = arrivalTerminal;
-		this.departureTerminal = departureTerminal;
+	public List<String> getArrivalTerminal() {
+		return arrivalTerminal;
 	}
+	public void setArrivalTerminal(List<String> arrivalTerminal) {
+		this.arrivalTerminal = arrivalTerminal;
+	}
+	public FROMTODAO(String departureTerminal, List<String> arrivalTerminal) {
+		super();
+		this.departureTerminal = departureTerminal;
+		this.arrivalTerminal = arrivalTerminal;
+	}
+	
+	
 	
 }
