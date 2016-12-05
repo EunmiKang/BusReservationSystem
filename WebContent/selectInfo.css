@@ -8,11 +8,15 @@ body {
 
 #selectInfoForm {
     margin: auto;
-    width: 300px;
+    width: 350px;
 	height: 350px;
 	border: 5px solid black;
     margin-bottom: 10%;
     padding: 30px;
+}
+
+#selectInfoTable {
+	 width: 350px;
 }
 
 
