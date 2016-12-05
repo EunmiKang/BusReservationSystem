@@ -1,49 +1,65 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@page import="DAO.HOSTDAO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="DAO.SCHEDULEINFO"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page import="java.io.*" %>
+<%@ page import="java.util.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%
+	String HOSTID = (String)session.getAttribute("ID");
+	String HOSTPW = (String)session.getAttribute("PW");
+	List<SCHEDULEINFO> scheduleInfoList = new ArrayList<>(); 
+	HOSTDAO hostDao = new HOSTDAO(HOSTID,HOSTPW);
+	scheduleInfoList = hostDao.loadSchedule();
+	String scheduleInfoStr = null;
+	String[] str = new String[6];
+%>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title> °ü¸®ÀÚ ÆäÀÌÁö </title>
+	<title> ê´€ë¦¬ìž íŽ˜ì´ì§€ </title>
 	<link type="text/css" rel="stylesheet" href="adminPage.css"/>
+	<script>
+	
+	</script>
 </head>
 <body>
-	<form >
+	<form>
 		<table id="addTable">
 			<tr>
-				<td class="left">Ãâ¹ßÁö</td>
+				<td class="left">ì¶œë°œì§€</td>
 				<td>
 					<input type="text" class="right" name="departure"/>
 				</td>
 				
-				<td class="left">µµÂøÁö</td>
+				<td class="left">ë„ì°©ì§€</td>
 				<td>
 					<input type="text" class="right" name="arrival"/>
 				</td>
 				
-				<td class="left">Ãâ¹ß½Ã°£</td>
+				<td class="left">ì¶œë°œì‹œê°„</td>
 				<td>
 					<input type="text" class="right" name="departureTime"/>
 				</td>
 				
-				<td class="left">¼Ò¿ä½Ã°£</td>
+				<td class="left">ì†Œìš”ì‹œê°„</td>
 				<td>
 					<input type="text" class="right" name="requiredTime"/>
 				</td>
 				
-				<td class="left">¹ö½ºµî±Þ</td>
+				<td class="left">ë²„ìŠ¤ë“±ê¸‰</td>
 				<td>
 					<input type="text" class="right" name="busClass"/>
 				</td>
 				
-				<td class="left">°¡°Ý</td>
+				<td class="left">ê°€ê²©</td>
 				<td>
 					<input type="text" class="right" name="price"/>
 				</td>
 				
 				<td>
-					<input type="submit" value="µî·Ï"/>
+					<input type="submit" value="ë“±ë¡"/>
 				</td>
 			</tr>
 		</table>
@@ -51,13 +67,30 @@
 	
 	<table id="scheduleTable">
 		<tr>
-			<th>Ãâ¹ßÁö</th>
-			<th>µµÂøÁö</th>
-			<th>Ãâ¹ß½Ã°£</th>
-			<th>¼Ò¿ä½Ã°£</th>
-			<th>¹ö½ºµî±Þ</th>
-			<th>°¡°Ý</th>
+			<th>ì¶œë°œì§€</th>
+			<th>ë„ì°©ì§€</th>
+			<th>ì¶œë°œì‹œê°„</th>
+			<th>ì†Œìš”ì‹œê°„</th>
+			<th>ë²„ìŠ¤ë“±ê¸‰</th>
+			<th>ê°€ê²©</th>
 		</tr>
+		
+		<%
+		for(int i=0; i<scheduleInfoList.size(); i++)
+		{
+			scheduleInfoStr = hostDao.showSchedule(scheduleInfoList.get(i));
+			str = scheduleInfoStr.split(":");
+			%>
+			<input type="hidden" id = "addText1" name="folderName" value="<%=str[0]%>">
+			<input type="hidden" id = "addText2" name="folderName" value="<%=str[1]%>">
+			<input type="hidden" id = "addText3" name="folderName" value="<%=str[2]%>">
+			<input type="hidden" id = "addText4" name="folderName" value="<%=str[3]%>">
+			<input type="hidden" id = "addText5" name="folderName" value="<%=str[4]%>">
+			<input type="hidden" id = "addText6" name="folderName" value="<%=str[5]%>">
+			add();
+			<%
+		}
+		%>
 	</table>
 </body>
 </html>
