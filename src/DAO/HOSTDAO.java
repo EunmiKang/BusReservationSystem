@@ -40,7 +40,7 @@ public class HOSTDAO {
 		List<SCHEDULEINFO> SINFOLIST = new ArrayList<>();
 
 		try {
-			rs = dao.select(conn, "SELECT * FROM SCHEDULE_INFO");
+			rs = dao.select(conn, "SELECT * FROM SCHEDULE_INFO ORDER BY DEPARTURE_TIME");
 
 			while (rs.next() != false) {
 				SINFO = new SCHEDULEINFO(rs.getString("SCHEDULE_NO"), rs.getString("DEPARTURE_TERMINAL"),
@@ -265,4 +265,24 @@ public class HOSTDAO {
 		return false;
 	}
 	
+
+	public List<String> getVIPMembers(){
+		Connection conn = null;
+		List<String> members = new ArrayList<>();
+		DAO dao = new DAO();
+		ResultSet rs = null;
+		dao.createConn();
+		conn = dao.getConn();
+		try {
+			rs = dao.select(conn, "SELECT * FROM MEMBER WHERE M_ID <> 'ADMIN' ORDER BY M_TOTALPOINT DESC");
+			for(int i=0; rs.next()!=false && i<10; i++)
+			{
+				members.add(rs.getString("M_ID")+" : "+ rs.getString("M_TOTALPOINT"));
+			}
+			
+		} catch (Exception e) {
+			System.out.println("[*]	JOIN SELECT error: \n" + e.getMessage());
+		}
+		return members;
+	}
 }
