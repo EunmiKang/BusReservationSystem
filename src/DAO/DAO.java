@@ -139,19 +139,20 @@ public class DAO {
 		conn = dao.getConn();
 		List<FROMTODAO> FTList = new ArrayList<>();
 		List<String> terminalName = new ArrayList<>();
-		List<String> terminalName2 = new ArrayList<>();
+		List<TERMINALREQUIREDTIME> terminalRequiredTimeList = new ArrayList<>();
 		try {
 			rs = dao.select(conn, "SELECT TERMINALNAME FROM TERMINAL");
 
 			while (rs.next() != false) {
 				temp = rs.getString("TERMINALNAME");
 				terminalName.add(temp);
-				terminalName2 = new ArrayList<>();
-				rs2 = dao.select(conn, "SELECT ARRIVAL_TERMINAL FROM FROM_TO WHERE DEPARTURE_TERMINAL = \'"+temp+"\'");
+				terminalRequiredTimeList = new ArrayList<>();
+				rs2 = dao.select(conn, "SELECT ARRIVAL_TERMINAL, REQUIRED_TIME FROM FROM_TO WHERE DEPARTURE_TERMINAL = \'"+temp+"\'");
 				while(rs2.next()!=false){
-					terminalName2.add(rs2.getString("ARRIVAL_TERMINAL"));
+					terminalRequiredTimeList.add(
+							new TERMINALREQUIREDTIME(rs.getString("ARRIVAL_TERMINAL"),rs.getString("REQUIRED_TIME")));
 				}
-				FTList.add(new FROMTODAO(temp, terminalName2));
+				FTList.add(new FROMTODAO(temp, terminalRequiredTimeList));
 			}
 			return FTList;
 		} catch (Exception e) {
