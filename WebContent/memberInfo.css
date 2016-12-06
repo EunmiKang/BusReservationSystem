@@ -66,9 +66,19 @@ h2 {
 }
 
 .right {
-	width: 90%;
+	width: 100%;
 	height: 30px;
 	border: 0px;
+	background-color: white;
+	font-family: 'BM11';
+}
+
+.unchangeable {
+	background-color: #f2f2f2;
+}
+
+.unchangeable:hover {
+	cursor: default;
 }
 
 .tdBtn {
