@@ -74,9 +74,9 @@
 					if(departure != null) {
 						for(int i=0; i<fromToList.size(); i++){
 							if(departure.equals(fromToList.get(i).getDepartureTerminal())) {
-								for(int j=0; j<fromToList.get(i).getArrivalTerminal().size(); j++) {
-									out.println("<option value='"+fromToList.get(i).getArrivalTerminal().get(j)+"'>"
-											+fromToList.get(i).getArrivalTerminal().get(j)+"</option>");	
+								for(int j=0; j<fromToList.get(i).getArrivalTerminalLIST().size(); j++) {
+									out.println("<option value='"+fromToList.get(i).getArrivalTerminalLIST().get(j).getARRIVALTERMINAL()+"'>"
+											+fromToList.get(i).getArrivalTerminalLIST().get(j).getARRIVALTERMINAL()+"</option>");	
 								}
 							}
 						}
@@ -92,7 +92,7 @@
 				
 				<td class="left">소요시간</td>
 				<td>
-					<input type="text" class="right" name="requiredTime" placeholder="ex)00:00" required/>
+					<input type="text" class="right" name="requiredTime" placeholder="<%= %>" required/>
 				</td>
 				
 				<td class="left">버스등급</td>

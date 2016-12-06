@@ -8,7 +8,6 @@
 	String departure = (String) request.getParameter("departureResult");
 	String arrival = (String) request.getParameter("arrival");
 	String departureTime = (String) request.getParameter("departureTime");
-	String requiredTime = (String) request.getParameter("requiredTime");
 	String busClass = (String) request.getParameter("busClass");
 	String price = (String) request.getParameter("price");
 	
