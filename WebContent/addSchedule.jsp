@@ -40,14 +40,14 @@
 	if(result == true){
 	%>
 	<script>
-		alert("배차 등록에 성공했습니다.");
+		alert("배차등록에 성공했습니다.");
 		location.href = "adminPage.jsp";
 	</script>
 	<%
 	}else{
 	%>
 	<script>
-		alert("배차 등록에 실패했습니다.");
+		alert("배차등록에 실패했습니다.");
 		history.go(-1);
 	</script>
 	<%

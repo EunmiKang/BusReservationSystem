@@ -7,19 +7,14 @@
 	String changePW = request.getParameter("PW");
 	String changephoneNum = request.getParameter("phoneNum");
 	
-	out.println("ID = "+ID+" \n");
-	out.println("  PW = "+PW+" \n");
-	out.println("  changePW = "+changePW+" \n");
-	out.println("  changephoneNum = "+changephoneNum+" \n");
+	
 	
 	String userInfo=null;
 	USERDAO userDao = new USERDAO(ID,PW);
 	userInfo = userDao.selectUserInfo();
 	String[] info = userInfo.split(":");
 	//ID, PW, NAME, PHONENUM, CURRENTPOINT
-	for(int i=0; i<info.length; i++)
-		out.println("     info["+i+"]"+info[i]+" \n");
-	
+
 	
 	
 %>
@@ -35,7 +30,7 @@
 	{
 		%>
 			<script>
-				alert("변경된 정보가 없습니다.");
+			alert("변경된 정보가 없습니다.");
 				history.go(-1);	
 			</script>
 		<%	
