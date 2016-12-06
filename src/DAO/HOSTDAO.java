@@ -242,4 +242,27 @@ public class HOSTDAO {
 		return false;
 	}
 	
+	public boolean deleteSchedule(String departure, String arrival, String departureTime){
+		Connection conn = null;
+		ResultSet rs = null;
+		
+		DAO dao = new DAO();
+		dao.createConn();
+		conn = dao.getConn();	
+		
+		try {
+			if(dao.delete(conn, "DELETE FROM SCHEDULE_INFO "
+					+ "WHERE DEPARTURE_TERMINAL = '"+departure
+					+"' AND ARRIVAL_TERMINAL = '"+arrival
+					+"' AND DEPARTURE_TIME = '"+departureTime+"'")){
+				return true;
+			}
+			else
+				return false;
+		} catch (Exception e) {
+			System.out.println("[*]	insertSchedule INSERT error: \n" + e.getMessage());
+		}
+		return false;
+	}
+	
 }
