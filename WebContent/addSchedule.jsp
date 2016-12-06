@@ -4,13 +4,23 @@
 
 <%
 	request.setCharacterEncoding("UTF-8");
-	
+	String HOSTID = (String)session.getAttribute("ID");
+	String HOSTPW = (String)session.getAttribute("PW");	
+
+
 	String departure = (String) request.getParameter("departureResult");
 	String arrival = (String) request.getParameter("arrival");
 	String departureTime = (String) request.getParameter("departureTime");
+	String requiredTime = (String) request.getParameter("requiredTime");
 	String busClass = (String) request.getParameter("busClass");
 	String price = (String) request.getParameter("price");
 	
+	DAO dao = new DAO();
+	HOSTDAO hostDao = new HOSTDAO(HOSTID,HOSTPW);
+	//String scheduleNo, String fK_departureTerminal, String fK_arrivalTerminal, String fk_busNo,
+	//String departureTime, String remainingSeatsNum, String price, String requiredTime
+	SCHEDULEINFO SINFO = new SCHEDULEINFO("",departure,arrival,hostDao.returnBusNo(busClass),
+											departureTime,hostDao.returnOriginSeatNum(busClass),price,requiredTime);
 	
 %>
 
