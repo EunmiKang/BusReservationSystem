@@ -15,7 +15,7 @@
 	String busClass = (String) request.getParameter("busClassResult");
 	String price = (String) request.getParameter("price");
 	
-	DAO dao = new DAO();
+	//DAO dao = new DAO();
 	HOSTDAO hostDao = new HOSTDAO(HOSTID,HOSTPW);
 	//String scheduleNo, String fK_departureTerminal, String fK_arrivalTerminal, String fk_busNo,
 	//String departureTime, String remainingSeatsNum, String price, String requiredTime

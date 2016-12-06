@@ -1,4 +1,3 @@
-<%@page import="DAO.HOSTDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="DAO.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -109,7 +108,7 @@
 				
 				<td class="left">출발시간</td>
 				<td>
-					<input type="departureTime" class="right" name="departureTime" required/>
+					<input type="time" class="right" name="departureTime" required/>
 				</td>
 				
 				<td class="left">소요시간</td>
@@ -172,7 +171,7 @@
 			</tr>
 		</table>
 	</form>
-	<form name="deleteScheduleForm" action="deleteSchedule.jsp" method="post">
+	
 		<table id="scheduleTable">
 			<tr>
 				<th>출발지</th>
@@ -192,22 +191,22 @@
 				str = scheduleInfoStr.split(" ");
 				
 				%>
+				<form action="deleteSchedule.jsp" method="post">
 				<tr>
-					<td><input name = "departure_<%=j%>" type="text" value="<%=str[0]%>"></td>
-					<td><input name = "arrival_<%=j%>" type="text" value="<%=str[1]%>"></td>
-					<td><input name = "departuretime_<%=j%>" type="text" value="<%=str[2]%>"></td>
-					<td><input name = "requiredtime_<%=j%>" type="text" value="<%=str[3]%>"></td>
-					<td><input name = "busclass_<%=j%>" type="text" value="<%=str[4]%>"></td>
-					<td><input name = "price_<%=j%>" type="text" value="<%=str[5]%>"></td>
+					<td><input name = "departure_<%=j%>" type="text" readonly value="<%=str[0]%>"></td>
+					<td><input name = "arrival_<%=j%>" type="text" readonly value="<%=str[1]%>"></td>
+					<td><input name = "departuretime_<%=j%>" type="text" readonly value="<%=str[2]%>"></td>
+					<td><input name = "requiredtime_<%=j%>" type="text" readonly value="<%=str[3]%>"></td>
+					<td><input name = "busclass_<%=j%>" type="text" readonly value="<%=str[4]%>"></td>
+					<td><input name = "price_<%=j%>" type="text" readonly value="<%=str[5]%>"></td>
 					<input type="hidden" name = "selectIdx" value = "<%=j%>" >
-					<td><input class = "btn" id="deleteBtn" type="submit" value="삭제"/>
+					<td><input class = "btn" id="deleteBtn" type="submit" value="삭제"/></td>
 				</tr>
+				</form>
 				<%
 				j++;
 			}
 			%>
-			
 		</table>
-	</form>
 </body>
 </html>
