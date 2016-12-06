@@ -58,9 +58,9 @@ public class HOSTDAO {
 	public String showSchedule(SCHEDULEINFO SINFO) {
 		String INFO = null;
 		try {
-			INFO = SINFO.getFK_departureTerminal() + ":" + SINFO.getFK_arrivalTerminal() + ":"
-					+ SINFO.getDepartureTime() + ":" + SINFO.getRequiredTime() + ":"
-					+ SINFO.returnBusClass(SINFO.getFK_busNo()) + ":" + SINFO.getPrice();
+			INFO = SINFO.getFK_departureTerminal() + " " + SINFO.getFK_arrivalTerminal() + " "
+					+ SINFO.getDepartureTime() + " " + SINFO.getRequiredTime() + " "
+					+ SINFO.returnBusClass(SINFO.getFK_busNo()) + " " + SINFO.getPrice();
 			if (INFO != null) {
 				return INFO;
 			}
@@ -170,16 +170,18 @@ public class HOSTDAO {
 	public String returnBusNo(String busClass){
 		Connection conn = null;
 		ResultSet rs = null;
-		
+		String returnstr=null;
 		DAO dao = new DAO();
 		dao.createConn();
 		conn = dao.getConn();	
 		
 		try {
-			rs = dao.select(conn, "SELECT * FROM BUS WHERE BUSCLASS = \'"+busClass+"\'");
+			returnstr = returnNameOfBusClass(busClass);
+			rs = dao.select(conn, "SELECT * FROM BUS WHERE BUSCLASS = \'"+returnstr+"\'");
 			if(rs.next()==true)
 			{
-				return rs.getString("BUSNO");
+				returnstr = rs.getString("BUSNO");
+				return returnstr;
 			}
 			else
 			{
@@ -200,6 +202,15 @@ public class HOSTDAO {
 			return "25";
 	}
 	
+	public String returnNameOfBusClass(String busClass){
+		if(busClass.equals("100"))
+			return "일반";
+		else if(busClass.equals("010"))
+			return "우등";
+		else
+			return "프리미엄";
+	}
+	
 	public boolean insertSchedule(SCHEDULEINFO SINFO){
 		Connection conn = null;
 		ResultSet rs = null;
@@ -209,11 +220,20 @@ public class HOSTDAO {
 		conn = dao.getConn();	
 		
 		try {
-			if(dao.insert(conn, "INSERT INTO "
-					+"SCHEDULE_INFO(SCHEDULE_NO, DEPARTURE_TERMINAL, ARRIVAL_TERMINAL, BUS_NO, DEPARTURE_TIME, REMAINING_SEATS_NUM, PRICE, REQUIRED_TIME) "
-					+"VALUES(SCHEDULE_NO.NEXT_VAL,'"+SINFO.getFK_departureTerminal()+"','"+SINFO.getFK_arrivalTerminal()+"','"+SINFO.getFK_busNo()
-					+"','"+SINFO.getDepartureTime()+"','"+SINFO.getRemainingSeatsNum()+"','"+SINFO.getPrice()+"','"+SINFO.getRequiredTime()+"')")==true){
-			return true;	
+			rs = dao.select(conn, "SELECT * FROM SCHEDULE_INFO "
+					+ "WHERE DEPARTURE_TERMINAL = '"+SINFO.getFK_departureTerminal()
+					+"' AND ARRIVAL_TERMINAL = '"+SINFO.getFK_arrivalTerminal()
+					+"' AND DEPARTURE_TIME = '"+SINFO.getDepartureTime()+"'");
+			if(!SINFO.getFK_arrivalTerminal().equals("선택")&&!SINFO.getFK_arrivalTerminal().equals("null"))
+			{
+				if(rs.next()==false){
+					if(dao.insert(conn, "INSERT INTO "
+							+"SCHEDULE_INFO(SCHEDULE_NO, DEPARTURE_TERMINAL, ARRIVAL_TERMINAL, BUS_NO, DEPARTURE_TIME, REMAINING_SEATS_NUM, PRICE, REQUIRED_TIME) "
+							+"VALUES(SCHEDULE_NO.NEXTVAL,'"+SINFO.getFK_departureTerminal()+"','"+SINFO.getFK_arrivalTerminal()+"',"+SINFO.getFK_busNo()
+							+",'"+SINFO.getDepartureTime()+"',"+SINFO.getRemainingSeatsNum()+","+SINFO.getPrice()+",'"+SINFO.getRequiredTime()+"')")){
+					return true;	
+					}
+				}
 			}
 			else return false;
 		} catch (Exception e) {
