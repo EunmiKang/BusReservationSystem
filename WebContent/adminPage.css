@@ -7,7 +7,10 @@ body {
 }
 
 #addTable {
-	width: 100%;
+	width: 90%;
+	margin: auto;
+	border-collapse: collapse;
+	border: 3px solid black;
 }
 
 #scheduleTable {
@@ -20,4 +23,37 @@ body {
 
 th {
 	margin: 5px;
+}
+
+h1 {
+	width: 300px;
+	margin: auto;
+	margin-top: 3%;
+	margin-bottom: 5%;
+	text-align: center;
+	font-family: 'BM11';
+}
+
+.left {
+	font-family: 'BM11';
+	cursor: default;
+}
+
+.right {
+	font-family: 'BM11';
+	width: 100px;
+}
+
+#addBtn {
+	font-family: 'BM11';
+	font-size: 13pt;
+	background-color: #cce6ff;
+	border: 2px solid #cce6ff;
+	border-radius: 5px;
+}
+
+#addBtn:hover {
+	background-color: white;
+	border: 2px solid #cce6ff;
+	cursor: pointer;
 }

@@ -33,9 +33,10 @@
 	<script src="adminPage.js"></script>
 </head>
 <body>
+	<h1>관리자 페이지</h1>
 	<form id="testForm" action="adminPage.jsp" method="post">
 	</form>
-	<form name="addScheduleForm">
+	<form name="addScheduleForm" action="addSchedule.jsp" method="post">
 		<table id="addTable">
 			<tr>
 				<td class="left">출발지</td>
@@ -86,12 +87,12 @@
 				
 				<td class="left">출발시간</td>
 				<td>
-					<input type="text" class="right" name="departureTime"/>
+					<input type="departureTime" class="right" name="departureTime" required/>
 				</td>
 				
 				<td class="left">소요시간</td>
 				<td>
-					<input type="text" class="right" name="requiredTime" value=""/>
+					<input type="text" class="right" name="requiredTime" placeholder="ex)00:00" required/>
 				</td>
 				
 				<td class="left">버스등급</td>
@@ -121,11 +122,11 @@
 				
 				<td class="left">가격</td>
 				<td>
-					<input type="text" class="right" name="price"/>
+					<input type="text" class="right" name="price" required/>
 				</td>
 				
 				<td>
-					<input type="submit" value="등록"/>
+					<input id="addBtn" type="submit" value="배차등록"/>
 				</td>
 			</tr>
 		</table>
