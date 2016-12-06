@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DAO {
 
@@ -125,5 +127,36 @@ public class DAO {
 		}
 
 		return meta;
+	}
+	
+	public List<FROMTODAO> loadDepartureTerminal(){
+		Connection conn = null;
+		String temp;
+		ResultSet rs = null;
+		ResultSet rs2 = null;
+		DAO dao = new DAO();
+		dao.createConn();
+		conn = dao.getConn();
+		List<FROMTODAO> FTList = new ArrayList<>();
+		List<String> terminalName = new ArrayList<>();
+		List<String> terminalName2 = new ArrayList<>();
+		try {
+			rs = dao.select(conn, "SELECT TERMINALNAME FROM TERMINAL");
+
+			while (rs.next() != false) {
+				temp = rs.getString("TERMINALNAME");
+				terminalName.add(temp);
+				terminalName2 = new ArrayList<>();
+				rs2 = dao.select(conn, "SELECT ARRIVAL_TERMINAL FROM FROM_TO WHERE DEPARTURE_TERMINAL = \'"+temp+"\'");
+				while(rs2.next()!=false){
+					terminalName2.add(rs2.getString("ARRIVAL_TERMINAL"));
+				}
+				FTList.add(new FROMTODAO(temp, terminalName2));
+			}
+			return FTList;
+		} catch (Exception e) {
+			System.out.println("[*]	JOIN SELECT error: \n" + e.getMessage());
+		}
+		return null;
 	}
 }

@@ -116,7 +116,6 @@ public class HOSTDAO {
 		String temp;
 		ResultSet rs = null;
 		ResultSet rs2 = null;
-		FROMTODAO FT = null;
 		DAO dao = new DAO();
 		dao.createConn();
 		conn = dao.getConn();
@@ -137,6 +136,29 @@ public class HOSTDAO {
 				FTList.add(new FROMTODAO(temp, terminalName2));
 			}
 			return FTList;
+		} catch (Exception e) {
+			System.out.println("[*]	JOIN SELECT error: \n" + e.getMessage());
+		}
+		return null;
+	}
+	
+	public List<TERMINALDAO> loadTerminal(){
+		Connection conn = null;
+		ResultSet rs = null;
+		TERMINALDAO terminal = null;
+		DAO dao = new DAO();
+		dao.createConn();
+		conn = dao.getConn();
+		List<TERMINALDAO> resultList = new ArrayList<>();
+		try {
+			rs = dao.select(conn, "SELECT * FROM TERMINAL");
+
+			while (rs.next() != false) {
+				terminal = new TERMINALDAO(rs.getString("TERMINALNAME"), rs.getString("ADDRESS"),
+						rs.getString("TELENUM"), rs.getString("BUSCLASS"));
+				resultList.add(terminal);
+			}
+			return resultList;
 		} catch (Exception e) {
 			System.out.println("[*]	JOIN SELECT error: \n" + e.getMessage());
 		}
