@@ -2,8 +2,15 @@
 <%@ page import="java.io.*"%>
 <%@ page import="DAO.*" %>
 <%@ page import="java.sql.*" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-
+</head>
+<body>
+</body>
+</html>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String ID = request.getParameter("ID");
@@ -14,14 +21,14 @@
 	if(result == 0){
 		%>
 		<script>
-			alert("존재하지 않는 ID입니다.");
+		alert("존재하지 않는 ID입니다.");
 			location.href = "main.html";
 		</script>
 		<%	
 	}else if(result == 2){
 		%>
 		<script>
-			alert("비밀번호가 틀렸습니다.");
+		alert("비밀번호가 틀렸습니다.");
 			location.href = "main.html";
 		</script>
 		<%	

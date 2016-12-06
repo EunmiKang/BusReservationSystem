@@ -9,6 +9,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title> 버스 예매 시스템 </title>
+	
 </head>
 <body>
 	

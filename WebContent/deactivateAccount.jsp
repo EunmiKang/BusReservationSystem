@@ -14,6 +14,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
+
 </head>
 <body>
 	<%
@@ -22,7 +23,7 @@
 	{
 		%>
 		<script>
-			alert("회원탈퇴에 실패하였습니다.");
+		alert("회원탈퇴에 실패하였습니다.");
 			location.href = "memberInfo.jsp";
 		</script>
 		<%	
