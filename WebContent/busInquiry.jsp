@@ -71,11 +71,12 @@
 					<select name="arrival" form="busInquiryForm" class="right">
 					<%
 					if(departure != null) {
+						out.println("<option value=\"선택\">선택</option>");
 						for(int i=0; i<fromToList.size(); i++){
 							if(departure.equals(fromToList.get(i).getDepartureTerminal())) {
-								for(int j=0; j<fromToList.get(i).getArrivalTerminal().size(); j++) {
-									out.println("<option value='"+fromToList.get(i).getArrivalTerminal().get(j)+"'>"
-											+fromToList.get(i).getArrivalTerminal().get(j)+"</option>");	
+								for(int j=0; j<fromToList.get(i).getArrivalTerminalLIST().size(); j++) {
+									out.println("<option value='"+fromToList.get(i).getArrivalTerminalLIST().get(j).getARRIVALTERMINAL()+"'>"
+											+fromToList.get(i).getArrivalTerminalLIST().get(j).getARRIVALTERMINAL()+"</option>");	
 								}
 							}
 						}
