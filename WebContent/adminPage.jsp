@@ -24,6 +24,7 @@
 	String scheduleInfoStr = null;
 	String[] str = new String[6];
 	String departure = (String) request.getParameter("departure");
+	String arrival = (String) request.getParameter("arrival");
 %>
 <html>
 <head>
@@ -35,6 +36,8 @@
 <body>
 	<h1>관리자 페이지</h1>
 	<form id="testForm" action="adminPage.jsp" method="post">
+	</form>
+	<form id="testForm2" action="adminPage.jsp" method="post">
 	</form>
 	<form name="addScheduleForm" action="addSchedule.jsp" method="post">
 		<table id="addTable">
@@ -65,24 +68,41 @@
 						}
 					%>
 					</select>
-					<input type="hidden" name="departureResult" value="<%=departure%>">
+					<input type="hidden" name="departure" form="testForm2" value="<%=departure%>"/>
+					<input type="hidden" name="departureResult" value="<%=departure%>"/>
 				</td>
 				<td class="left">도착지</td>
 				<td>
-					<select name="arrival" form="addScheduleForm" class="right">
+					<select name="arrival" form="testForm2" class="right" onchange="testPlz2()">
 					<%
 					if(departure != null) {
 						for(int i=0; i<fromToList.size(); i++){
 							if(departure.equals(fromToList.get(i).getDepartureTerminal())) {
-								for(int j=0; j<fromToList.get(i).getArrivalTerminalLIST().size(); j++) {
-									out.println("<option value='"+fromToList.get(i).getArrivalTerminalLIST().get(j).getARRIVALTERMINAL()+"'>"
-											+fromToList.get(i).getArrivalTerminalLIST().get(j).getARRIVALTERMINAL()+"</option>");	
+								out.println("<option value=\"선택\">선택</option>");
+								if(arrival != null) {
+									for(int j=0; j<fromToList.get(i).getArrivalTerminalLIST().size(); j++) {
+										if(arrival.equals(fromToList.get(i).getArrivalTerminalLIST().get(j).getARRIVALTERMINAL())) {
+											out.println("<option value='"+fromToList.get(i).getArrivalTerminalLIST().get(j).getARRIVALTERMINAL()+"' selected>"
+													+fromToList.get(i).getArrivalTerminalLIST().get(j).getARRIVALTERMINAL()+"</option>");	
+										}
+										else {
+											out.println("<option value='"+fromToList.get(i).getArrivalTerminalLIST().get(j).getARRIVALTERMINAL()+"'>"
+													+fromToList.get(i).getArrivalTerminalLIST().get(j).getARRIVALTERMINAL()+"</option>");		
+										}
+									}
+								}
+								else {
+									for(int j=0; j<fromToList.get(i).getArrivalTerminalLIST().size(); j++) {
+										out.println("<option value='"+fromToList.get(i).getArrivalTerminalLIST().get(j).getARRIVALTERMINAL()+"'>"
+												+fromToList.get(i).getArrivalTerminalLIST().get(j).getARRIVALTERMINAL()+"</option>");
+									}
 								}
 							}
 						}
 					}
 					%>
 					</select>
+					<input type="hidden" name="arrivalResult" value="<%=departure%>"/>
 				</td>
 				
 				<td class="left">출발시간</td>
@@ -92,7 +112,21 @@
 				
 				<td class="left">소요시간</td>
 				<td>
-					<input type="text" class="right" name="requiredTime" placeholder="<%= %>" required/>
+					<%
+						if(arrival != null) {
+							if(departure != null) {
+								for(int i=0; i<fromToList.size(); i++){
+									if(departure.equals(fromToList.get(i).getDepartureTerminal())) {
+										for(int j=0; j<fromToList.get(i).getArrivalTerminalLIST().size(); j++) {
+											if(arrival.equals(fromToList.get(i).getArrivalTerminalLIST().get(j).getARRIVALTERMINAL())) {
+												out.println(fromToList.get(i).getArrivalTerminalLIST().get(j).getREQUIREDTIME());	
+											}
+										}
+									}
+								}
+							}
+						}
+					%>
 				</td>
 				
 				<td class="left">버스등급</td>
