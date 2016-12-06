@@ -235,5 +235,41 @@
 		}
 		%>
 		</table>
+		
+		<form id="terminalBusClassForm" action="addBusClass.jsp" method="post">
+			<table>
+				<tr>
+					<td class="left"> 터미널 </td>
+					<td>
+						<select name="terminal_b" form="terminalBusClassForm" class="right">
+						<% 
+							for(int i=0; i<terminalList.size(); i++) {
+								out.println("<option value='" + terminalList.get(i).getTerminalName() + "'>"
+												+ terminalList.get(i).getTerminalName() + "</option>");
+							}
+						%>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="left"> 버스 등급 </td>
+					<td>
+						<select name="busClass_b" form="terminalBusClassForm" class="right"> 
+							<option value="0">일반</option>
+							<option value="1">우등</option>
+							<option value="2">프리미엄</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="submit" class="btn" value="추가"/>
+					</td>
+					<td>
+						<input type="submit" class="btn" value="삭제" formaction="deleteBusClass.jsp"/>
+					</td>
+				</tr>
+			</table>
+		</form>
 </body>
 </html>

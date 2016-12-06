@@ -11,10 +11,10 @@
 	
 	HOSTDAO hostDao = new HOSTDAO(hostID, hostPW);
 	
-	if(hostDao.addBusClass(terminal, busClass)) {	//success add
+	if(hostDao.deleteBusClass(terminal, busClass)) {	//success add
 		%>
 		<script>
-			alert("등록하였습니다.");
+			alert("삭제하였습니다.");
 			location.replace("adminPage.jsp");
 		</script>
 		<%
@@ -22,18 +22,19 @@
 	else {	//fail add
 		%>
 		<script>
-			alert("이미 추가 되어있는 버스 등급입니다.");
+			alert("선택하신 버스 등급은 추가되어 있지 않습니다.");
 			location.replace("adminPage.jsp");
 		</script>
 		<%
 	}
 	
 %>
+    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>버스 예매 시스템</title>
+	<title> 버스 예매 시스템 </title>
 </head>
 <body>
 	
