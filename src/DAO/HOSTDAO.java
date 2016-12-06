@@ -285,4 +285,70 @@ public class HOSTDAO {
 		}
 		return members;
 	}
+	
+	public boolean addBusClass(String terminal, int busClassIndex){
+		Connection conn = null;
+		ResultSet rs = null;
+		
+		DAO dao = new DAO();
+		dao.createConn();
+		conn = dao.getConn();
+		try {
+			rs = dao.select(conn, "SELECT * FROM TERMINAL WHERE TERMINALNAME = '" + terminal + "'");
+			if(rs.next() != false) {
+				String terminalBusClass = rs.getString("BUSCLASS");
+				if(terminalBusClass.charAt(busClassIndex) == '0'){	//add
+					String changeValue = "";
+					for(int i=0; i<3; i++) {
+						if(i==busClassIndex) {
+							changeValue += "1";
+						}
+						else {
+							changeValue += terminalBusClass.charAt(i);
+						}
+					}
+					dao.updateBranch(conn, "TERMINAL", "BUSCLASS", changeValue , "TERMINALNAME = '" + terminal + "'");
+					return true;
+				}
+				else
+					return false;
+			}
+		} catch (Exception e) {
+			System.out.println("[*]	addBusClass UPDATE error: \n" + e.getMessage());
+		}
+		return false;
+	}
+	
+	public boolean deleteBusClass(String terminal, int busClassIndex){
+		Connection conn = null;
+		ResultSet rs = null;
+		
+		DAO dao = new DAO();
+		dao.createConn();
+		conn = dao.getConn();
+		try {
+			rs = dao.select(conn, "SELECT * FROM TERMINAL WHERE TERMINALNAME = '" + terminal + "'");
+			if(rs.next() != false) {
+				String terminalBusClass = rs.getString("BUSCLASS");
+				if(terminalBusClass.charAt(busClassIndex) == '1'){	//delete
+					String changeValue = "";
+					for(int i=0; i<3; i++) {
+						if(i==busClassIndex) {
+							changeValue += "0";
+						}
+						else {
+							changeValue += terminalBusClass.charAt(i);
+						}
+					}
+					dao.updateBranch(conn, "TERMINAL", "BUSCLASS", changeValue , "TERMINALNAME = '" + terminal + "'");
+					return true;
+				}
+				else
+					return false;
+			}
+		} catch (Exception e) {
+			System.out.println("[*]	deleteBusClass UPDATE error: \n" + e.getMessage());
+		}
+		return false;
+	}
 }
