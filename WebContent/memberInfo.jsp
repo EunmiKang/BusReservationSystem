@@ -26,7 +26,7 @@
 		<table>
 			<tr>
 				<td class="left">아이디</td>
-				<td class="right">
+				<td class="right unchangeable">
 					<%=info[0]%>
 				</td>
 			</tr>
@@ -38,7 +38,7 @@
 			</tr>
 			<tr>
 				<td class="left">이름</td>
-				<td class="right">
+				<td class="right unchangeable">
 				<%=info[2] %>
 				</td>
 			</tr>
@@ -50,7 +50,7 @@
 			</tr>
 			<tr>
 				<td class="left">포인트</td>
-				<td class="right">
+				<td class="right unchangeable">
 					<%=info[4] %>
 				</td>
 			</tr>
