@@ -1,10 +1,10 @@
-<%@page import="DAO.HOSTDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="DAO.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.io.*" %>
 <%@ page import="java.util.*" %>
+<%@ page import="java.text.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
 	request.setCharacterEncoding("UTF-8");
@@ -14,19 +14,26 @@
 	List<SCHEDULEINFO> scheduleInfoList = new ArrayList<>();
 	List<FROMTODAO> fromToList = new ArrayList<>();
 	List<TERMINALDAO> terminalList = new ArrayList<>();
+	List<String> VIPList = new ArrayList<>();
 	
 	HOSTDAO hostDao = new HOSTDAO(HOSTID,HOSTPW);
+	
 	
 	scheduleInfoList = hostDao.loadSchedule();
 	fromToList = hostDao.loadDepartureTerminal();
 	terminalList = hostDao.loadTerminal();
+	VIPList = hostDao.getVIPMembers();
+	
 	String tmp[] = null;
 	String gettmp = "000";
 	String requiredTime = null;
 	String scheduleInfoStr = null;
 	String[] str = new String[6];
+	
 	String departure = (String) request.getParameter("departure");
 	String arrival = (String) request.getParameter("arrival");
+	
+	
 %>
 <html>
 <head>
@@ -109,7 +116,7 @@
 				
 				<td class="left">출발시간</td>
 				<td>
-					<input type="departureTime" class="right" name="departureTime" required/>
+					<input type="time" class="right" name="departureTime" required/>
 				</td>
 				
 				<td class="left">소요시간</td>
@@ -163,7 +170,7 @@
 				<input type="hidden" name="busClassResult" value="<%=gettmp.toString()%>"/>
 				<td class="left">가격</td>
 				<td>
-					<input type="text" class="right" name="price" required/>
+					<input type="number" class="right" name="price" required/>
 				</td>
 				
 				<td>
@@ -172,7 +179,7 @@
 			</tr>
 		</table>
 	</form>
-	<form name="deleteScheduleForm" action="deleteSchedule.jsp" method="post">
+	
 		<table id="scheduleTable">
 			<tr>
 				<th>출발지</th>
@@ -192,21 +199,41 @@
 				str = scheduleInfoStr.split(" ");
 				
 				%>
+				<form action="deleteSchedule.jsp" method="post">
 				<tr>
-					<td><input name = "departure_<%=j%>" type="text" value="<%=str[0]%>"></td>
-					<td><input name = "arrival_<%=j%>" type="text" value="<%=str[1]%>"></td>
-					<td><input name = "departuretime_<%=j%>" type="text" value="<%=str[2]%>"></td>
-					<td><input name = "requiredtime_<%=j%>" type="text" value="<%=str[3]%>"></td>
-					<td><input name = "busclass_<%=j%>" type="text" value="<%=str[4]%>"></td>
-					<td><input name = "price_<%=j%>" type="text" value="<%=str[5]%>"></td>
+					<td><input name = "departure_<%=j%>" type="text" readonly value="<%=str[0]%>"></td>
+					<td><input name = "arrival_<%=j%>" type="text" readonly value="<%=str[1]%>"></td>
+					<td><input name = "departuretime_<%=j%>" type="text" readonly value="<%=str[2]%>"></td>
+					<td><input name = "requiredtime_<%=j%>" type="text" readonly value="<%=str[3]%>"></td>
+					<td><input name = "busclass_<%=j%>" type="text" readonly value="<%=str[4]%>"></td>
+					<td><input name = "price_<%=j%>" type="text" readonly value="<%=str[5]%>"></td>
 					<input type="hidden" name = "selectIdx" value = "<%=j%>" >
-					<td><input class = "btn" id="deleteBtn" type="submit" value="삭제"/>
+					<td><input class = "btn" id="deleteBtn" type="submit" value="삭제"/></td>
 				</tr>
+				</form>
 				<%
 				j++;
 			}
 			%>
 		</table>
-	</form>
+		<table id="VIPMembers">
+			<tr>
+				<th>사용자 ID</th>
+				<th>누적 포인트</th>
+			</tr>
+		<%
+		String[] str2 = new String[2];
+		for(int i=0; i<VIPList.size(); i++)
+		{
+			str2 = VIPList.get(i).split(":");
+			%>
+			<tr>
+				<td><%= str2[0]%></td>
+				<td><%= str2[1]%></td>
+			</tr>
+			<%
+		}
+		%>
+		</table>
 </body>
 </html>

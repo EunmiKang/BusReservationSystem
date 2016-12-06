@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="DAO.*" %>
-
+<%@ page import="java.util.*" %>
+<%@ page import="java.text.*" %>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String HOSTID = (String)session.getAttribute("ID");
@@ -15,11 +16,10 @@
 	String busClass = (String) request.getParameter("busClassResult");
 	String price = (String) request.getParameter("price");
 	
-	DAO dao = new DAO();
+	//DAO dao = new DAO();
 	HOSTDAO hostDao = new HOSTDAO(HOSTID,HOSTPW);
 	//String scheduleNo, String fK_departureTerminal, String fK_arrivalTerminal, String fk_busNo,
 	//String departureTime, String remainingSeatsNum, String price, String requiredTime
-	out.print(busClass);
 	SCHEDULEINFO SINFO = new SCHEDULEINFO("",departure,arrival,hostDao.returnBusNo(busClass),
 											departureTime,
 											hostDao.returnOriginSeatNum(busClass),
@@ -40,14 +40,14 @@
 	if(result == true){
 	%>
 	<script>
-		alert("배차에 성공했습니다.");
+		alert("배차 등록에 성공했습니다.");
 		location.href = "adminPage.jsp";
 	</script>
 	<%
 	}else{
 	%>
 	<script>
-		alert("배차에 실패했습니다.");
+		alert("배차 등록에 실패했습니다.");
 		history.go(-1);
 	</script>
 	<%
