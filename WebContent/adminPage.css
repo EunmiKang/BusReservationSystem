@@ -21,6 +21,11 @@ body {
 	border-bottom: 5px solid black;
 }
 
+#VIPMembers{
+	text-align : center;
+	font-family: 'BM11';
+}
+
 th {
 	margin: 5px;
 }

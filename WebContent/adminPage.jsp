@@ -4,6 +4,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.io.*" %>
 <%@ page import="java.util.*" %>
+<%@ page import="java.text.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
 	request.setCharacterEncoding("UTF-8");
@@ -13,19 +14,26 @@
 	List<SCHEDULEINFO> scheduleInfoList = new ArrayList<>();
 	List<FROMTODAO> fromToList = new ArrayList<>();
 	List<TERMINALDAO> terminalList = new ArrayList<>();
+	List<String> VIPList = new ArrayList<>();
 	
 	HOSTDAO hostDao = new HOSTDAO(HOSTID,HOSTPW);
+	
 	
 	scheduleInfoList = hostDao.loadSchedule();
 	fromToList = hostDao.loadDepartureTerminal();
 	terminalList = hostDao.loadTerminal();
+	VIPList = hostDao.getVIPMembers();
+	
 	String tmp[] = null;
 	String gettmp = "000";
 	String requiredTime = null;
 	String scheduleInfoStr = null;
 	String[] str = new String[6];
+	
 	String departure = (String) request.getParameter("departure");
 	String arrival = (String) request.getParameter("arrival");
+	
+	
 %>
 <html>
 <head>
@@ -162,7 +170,7 @@
 				<input type="hidden" name="busClassResult" value="<%=gettmp.toString()%>"/>
 				<td class="left">가격</td>
 				<td>
-					<input type="text" class="right" name="price" required/>
+					<input type="number" class="right" name="price" required/>
 				</td>
 				
 				<td>
@@ -207,6 +215,25 @@
 				j++;
 			}
 			%>
+		</table>
+		<table id="VIPMembers">
+			<tr>
+				<th>사용자 ID</th>
+				<th>누적 포인트</th>
+			</tr>
+		<%
+		String[] str2 = new String[2];
+		for(int i=0; i<VIPList.size(); i++)
+		{
+			str2 = VIPList.get(i).split(":");
+			%>
+			<tr>
+				<td><%= str2[0]%></td>
+				<td><%= str2[1]%></td>
+			</tr>
+			<%
+		}
+		%>
 		</table>
 </body>
 </html>
