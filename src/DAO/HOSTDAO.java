@@ -129,10 +129,10 @@ public class HOSTDAO {
 				temp = rs.getString("TERMINALNAME");
 				terminalName.add(temp);
 				terminalRequiredTimeList = new ArrayList<>();
-				rs2 = dao.select(conn, "SELECT ARRIVAL_TERMINAL, REQUIRED_TIME FROM FROM_TO WHERE DEPARTURE_TERMINAL = \'"+temp+"\'");
+				rs2 = dao.select(conn, "SELECT * FROM FROM_TO WHERE DEPARTURE_TERMINAL = \'"+temp+"\'");
 				while(rs2.next()!=false){
 					terminalRequiredTimeList.add(
-							new TERMINALREQUIREDTIME(rs.getString("ARRIVAL_TERMINAL"),rs2.getString("REQUIRED_TIME")));
+							new TERMINALREQUIREDTIME(rs2.getString("ARRIVAL_TERMINAL"),rs2.getString("REQUIRED_TIME")));
 					
 				}
 				FTList.add(new FROMTODAO(temp, terminalRequiredTimeList));
