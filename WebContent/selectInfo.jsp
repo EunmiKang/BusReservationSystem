@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@page import="DAO.*"%>
+    
+<%
+	request.setCharacterEncoding("UTF-8");
+	String departure = (String) request.getParameter("departure");
+	DAO dao = new DAO();
+	List<FROMTODAO> fromToList = new ArrayList<>();
+	fromToList = dao.loadDepartureTerminal();
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,27 +21,66 @@
 		function goMemberMain() {
 			location.href = "memberMain.jsp";
 		}
+		
+		function testPlz() {
+			document.getElementById("testForm").submit();
+		}
 	</script>
 </head>
 
 <body>
 	<h1 onclick="goMemberMain()">BUS TAJA</h1>
+	<form id="testForm" action="selectInfo.jsp" method="post">
+	</form>
 	<form action="getSchedule.jsp" method="post" id="selectInfoForm">
 		<h2>승차권 예매</h2>
 		<table id="selectInfoTable">
 			<tr>
 				<td class="left">출발지</td>
 				<td>
-					<select name="departure" form="selectInfoForm" class="right">
-						<option value="ex">Ex</option>
+					<select id="departure" name="departure" form="testForm" class="right" onchange="testPlz()">
+					<% 
+						if(departure != null) {
+							out.println("<option value=\"선택\">선택</option>");
+							for(int i=0; i<fromToList.size(); i++){
+								if(departure.equals(fromToList.get(i).getDepartureTerminal())) {
+									out.println("<option value='"+fromToList.get(i).getDepartureTerminal()+"' selected>"
+										+fromToList.get(i).getDepartureTerminal()+"</option>");
+								}
+								else {
+									out.println("<option value='"+fromToList.get(i).getDepartureTerminal()+"'>"
+										+fromToList.get(i).getDepartureTerminal()+"</option>");
+								}
+							}
+						}
+						else {
+							out.println("<option value=\"선택\">선택</option>");
+							for(int i=0; i<fromToList.size(); i++){
+								out.println("<option value='"+fromToList.get(i).getDepartureTerminal()+"'>"
+									+fromToList.get(i).getDepartureTerminal()+"</option>");
+							}
+						}
+					%>
 					</select>
+					<input type="hidden" name="departureResult" value="<%=departure%>">
 				</td>
 			</tr>
 			<tr>
 				<td class="left">도착지</td>
 				<td>
 					<select name="arrival" form="selectInfoForm" class="right">
-						<option value="ex">Ex</option>
+					<%
+					if(departure != null) {
+						for(int i=0; i<fromToList.size(); i++){
+							if(departure.equals(fromToList.get(i).getDepartureTerminal())) {
+								for(int j=0; j<fromToList.get(i).getArrivalTerminal().size(); j++) {
+									out.println("<option value='"+fromToList.get(i).getArrivalTerminal().get(j)+"'>"
+											+fromToList.get(i).getArrivalTerminal().get(j)+"</option>");	
+								}
+							}
+						}
+					}
+					%>
 					</select>
 				</td>
 			</tr>

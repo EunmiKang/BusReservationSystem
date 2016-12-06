@@ -35,6 +35,6 @@ function add()
 	document.getElementById("scheduleTable").appendChild(tr);
 }
 
-function testPlz(val) {
+function testPlz() {
 	document.getElementById("testForm").submit();
 }
