@@ -61,6 +61,7 @@ public class SCHEDULEINFO {
 	public void setRequiredTime(String requiredTime) {
 		this.requiredTime = requiredTime;
 	}
+	
 	public SCHEDULEINFO(String scheduleNo, 
 						String fK_departureTerminal, 
 						String fK_arrivalTerminal, 

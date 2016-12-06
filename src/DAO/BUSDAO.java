@@ -1,5 +1,8 @@
 package DAO;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+
 public class BUSDAO {
 	private String busNo;
 	private String diver;
@@ -28,6 +31,5 @@ public class BUSDAO {
 		this.diver = diver;
 		this.busClass = busClass;
 	}
-	
 	
 }

@@ -60,7 +60,7 @@ public class HOSTDAO {
 		try {
 			INFO = SINFO.getFK_departureTerminal() + ":" + SINFO.getFK_arrivalTerminal() + ":"
 					+ SINFO.getDepartureTime() + ":" + SINFO.getRequiredTime() + ":"
-					+ SINFO.returnBusClass(SINFO.getFK_busNo() + ":" + SINFO.getPrice());
+					+ SINFO.returnBusClass(SINFO.getFK_busNo()) + ":" + SINFO.getPrice();
 			if (INFO != null) {
 				return INFO;
 			}
@@ -166,4 +166,60 @@ public class HOSTDAO {
 		}
 		return null;
 	}
+	
+	public String returnBusNo(String busClass){
+		Connection conn = null;
+		ResultSet rs = null;
+		
+		DAO dao = new DAO();
+		dao.createConn();
+		conn = dao.getConn();	
+		
+		try {
+			rs = dao.select(conn, "SELECT * FROM BUS WHERE BUSCLASS = \'"+busClass+"\'");
+			if(rs.next()==true)
+			{
+				return rs.getString("BUSNO");
+			}
+			else
+			{
+				return null;
+			}
+		} catch (Exception e) {
+			System.out.println("[*]	returnBusClass SELECT error: \n" + e.getMessage());
+		}
+		return null;
+	}
+	
+	public String returnOriginSeatNum(String busClass){
+		if(busClass.equals("100"))
+			return "45";
+		else if(busClass.equals("010"))
+			return "35";
+		else
+			return "25";
+	}
+	
+	public boolean insertSchedule(SCHEDULEINFO SINFO){
+		Connection conn = null;
+		ResultSet rs = null;
+		
+		DAO dao = new DAO();
+		dao.createConn();
+		conn = dao.getConn();	
+		
+		try {
+			if(dao.insert(conn, "INSERT INTO "
+					+"SCHEDULE_INFO(SCHEDULE_NO, DEPARTURE_TERMINAL, ARRIVAL_TERMINAL, BUS_NO, DEPARTURE_TIME, REMAINING_SEATS_NUM, PRICE, REQUIRED_TIME) "
+					+"VALUES(SCHEDULE_NO.NEXT_VAL,'"+SINFO.getFK_departureTerminal()+"','"+SINFO.getFK_arrivalTerminal()+"','"+SINFO.getFK_busNo()
+					+"','"+SINFO.getDepartureTime()+"','"+SINFO.getRemainingSeatsNum()+"','"+SINFO.getPrice()+"','"+SINFO.getRequiredTime()+"')")==true){
+			return true;	
+			}
+			else return false;
+		} catch (Exception e) {
+			System.out.println("[*]	insertSchedule INSERT error: \n" + e.getMessage());
+		}
+		return false;
+	}
+	
 }

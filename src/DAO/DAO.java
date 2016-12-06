@@ -135,7 +135,7 @@ public class DAO {
 		ResultSet rs = null;
 		ResultSet rs2 = null;
 		DAO dao = new DAO();
-		dao.createConn();
+		dao.createConn(); 
 		conn = dao.getConn();
 		List<FROMTODAO> FTList = new ArrayList<>();
 		List<String> terminalName = new ArrayList<>();
@@ -159,5 +159,10 @@ public class DAO {
 			System.out.println("[*]	JOIN SELECT error: \n" + e.getMessage());
 		}
 		return null;
+	}
+	
+	public boolean insertTerminal(){
+		
+		return false;
 	}
 }
