@@ -49,6 +49,7 @@ public class DAO {
 				return false;
 			} else {
 				System.out.println("insert data success");
+				return true;
 			}
 		} catch (Exception e) {
 			System.out.println("[*]	INSERT data fail: \n" + e.getMessage());
@@ -111,6 +112,7 @@ public class DAO {
 				return false;
 			} else {
 				System.out.println("data delete success");
+				return true;
 			}
 		} catch (Exception e) {
 			System.out.println("[*]	DELETE error: \n" + e.getMessage());
@@ -160,10 +162,5 @@ public class DAO {
 			System.out.println("[*]	JOIN SELECT error: \n" + e.getMessage());
 		}
 		return null;
-	}
-	
-	public boolean insertTerminal(){
-		
-		return false;
 	}
 }
