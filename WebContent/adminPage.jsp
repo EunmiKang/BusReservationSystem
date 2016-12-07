@@ -28,6 +28,7 @@
 	String gettmp = "000";
 	String requiredTime = null;
 	String scheduleInfoStr = null;
+	String price = null;
 	String[] str = new String[6];
 	
 	String departure = (String) request.getParameter("departure");
@@ -140,7 +141,6 @@
 										for(int j=0; j<fromToList.get(i).getArrivalTerminalLIST().size(); j++) {
 											if(arrival.equals(fromToList.get(i).getArrivalTerminalLIST().get(j).getARRIVALTERMINAL())) {
 												requiredTime = fromToList.get(i).getArrivalTerminalLIST().get(j).getREQUIREDTIME();
-												//out.println(fromToList.get(i).getArrivalTerminalLIST().get(j).getREQUIREDTIME());
 												out.println(requiredTime);
 											}
 										}
@@ -149,8 +149,8 @@
 							}
 						}
 					%>
+					<input type="hidden" name="requiredTimeResult" value="<%=requiredTime%>"/>
 				</td>
-				<input type="hidden" name="requiredTimeResult" value="<%=requiredTime%>"/>
 				<td class="left">버스등급</td>
 				<td>
 					<select name="busClass" form="addScheduleForm" class="right">
@@ -181,7 +181,23 @@
 				<input type="hidden" name="busClassResult" value="<%=gettmp.toString()%>"/>
 				<td class="left">가격</td>
 				<td>
-					<input type="number" class="right" name="price" required/>
+					<%
+						if(arrival != null) {
+							if(departure != null) {
+								for(int i=0; i<fromToList.size(); i++){
+									if(departure.equals(fromToList.get(i).getDepartureTerminal())) {
+										for(int j=0; j<fromToList.get(i).getArrivalTerminalLIST().size(); j++) {
+											if(arrival.equals(fromToList.get(i).getArrivalTerminalLIST().get(j).getARRIVALTERMINAL())) {
+												price = fromToList.get(i).getArrivalTerminalLIST().get(j).getPRICE();
+												out.println(price);
+											}
+										}
+									}
+								}
+							}
+						}
+					%>
+					<input type="hidden" class="right" name="price" value="<%=price%>"/>
 				</td>
 				
 				<td>
