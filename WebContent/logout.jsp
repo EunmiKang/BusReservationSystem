@@ -10,6 +10,10 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 	<title>Insert title here</title>
+	<script>
+		alert("로그아웃 되었습니다.");
+		location.replace("main.html");	//main 페이지로 이동
+	</script>
 </head>
 <body>
 	

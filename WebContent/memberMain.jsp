@@ -8,7 +8,11 @@
 	<title>버스 예매 시스템</title>
 	<link type="text/css" rel="stylesheet" href="memberMain.css"/>
 	<script src="memberMain.js"></script>
-	<script src="logout.js"></script>
+	<script>
+		function logout() {
+			location.href="logout.jsp";
+		}
+	</script>
 </head>
 <body>
 	<table id="memberMainForm">

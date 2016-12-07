@@ -41,9 +41,20 @@
 	<title> 관리자 페이지 </title>
 	<link type="text/css" rel="stylesheet" href="adminPage.css"/>
 	<script src="adminPage.js"></script>
+	<script>
+		function goTerminal() {
+			location.href="terminalManagement.jsp";
+		}
+		
+		function logout() {
+			location.href="logout.jsp";
+		}
+	</script>
 </head>
 <body>
 	<h1>관리자 페이지</h1>
+	<button class="btn_r" onclick="logout()">Logout</button>
+	<button class="btn_r" onclick="goTerminal()">터미널 관리</button>
 	<form id="testForm" action="adminPage.jsp" method="post">
 	</form>
 	<form id="testForm2" action="adminPage.jsp" method="post">
@@ -180,96 +191,106 @@
 		</table>
 	</form>
 	
-		<table id="scheduleTable">
-			<tr>
-				<th>출발지</th>
-				<th>도착지</th>
-				<th>출발시간</th>
-				<th>소요시간</th>
-				<th>버스등급</th>
-				<th>가격</th>
-			</tr>
-			
-			<%
-			int j=0;
-			for(int i=0; i<scheduleInfoList.size(); i++)
-			{
-				
-				scheduleInfoStr = hostDao.showSchedule(scheduleInfoList.get(i));
-				str = scheduleInfoStr.split(" ");
-				
-				%>
-				<form action="deleteSchedule.jsp" method="post">
-				<tr>
-					<td><input name = "departure_<%=j%>" type="text" readonly value="<%=str[0]%>"></td>
-					<td><input name = "arrival_<%=j%>" type="text" readonly value="<%=str[1]%>"></td>
-					<td><input name = "departuretime_<%=j%>" type="text" readonly value="<%=str[2]%>"></td>
-					<td><input name = "requiredtime_<%=j%>" type="text" readonly value="<%=str[3]%>"></td>
-					<td><input name = "busclass_<%=j%>" type="text" readonly value="<%=str[4]%>"></td>
-					<td><input name = "price_<%=j%>" type="text" readonly value="<%=str[5]%>"></td>
-					<input type="hidden" name = "selectIdx" value = "<%=j%>" >
-					<td><input class = "btn" id="deleteBtn" type="submit" value="삭제"/></td>
-				</tr>
-				</form>
+	<div id="div1">
+		<div id="div2">
+			<h3>VIP 회원 조회</h3>
+			<table id="VIPMemberTable">
+					<tr>
+						<th>사용자 ID</th>
+						<th>누적 포인트</th>
+					</tr>
 				<%
-				j++;
-			}
-			%>
-		</table>
-		<table id="VIPMembers">
-			<tr>
-				<th>사용자 ID</th>
-				<th>누적 포인트</th>
-			</tr>
+				String[] str2 = new String[2];
+				for(int i=0; i<VIPList.size(); i++)
+				{
+					str2 = VIPList.get(i).split(":");
+					%>
+					<tr>
+						<td class="data"><%= str2[0]%></td>
+						<td class="data"><%= str2[1]%></td>
+					</tr>
+					<%
+				}
+				%>
+				</table>
+		</div>
+		<div id="div3">
+			<h3> 버스 등급 추가/삭제 </h3>
+			<form id="terminalBusClassForm" action="addBusClass.jsp" method="post">
+				<table id="terminalBusClassTable">
+					<tr>
+						<td class="left"> 터미널 </td>
+						<td>
+							<select name="terminal_b" form="terminalBusClassForm" class="right">
+							<% 
+								for(int i=0; i<terminalList.size(); i++) {
+									out.println("<option value='" + terminalList.get(i).getTerminalName() + "'>"
+													+ terminalList.get(i).getTerminalName() + "</option>");
+								}
+							%>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td class="left"> 버스 등급 </td>
+						<td>
+							<select name="busClass_b" form="terminalBusClassForm" class="right"> 
+								<option value="0">일반</option>
+								<option value="1">우등</option>
+								<option value="2">프리미엄</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<input type="submit" class="btn_b" value="추가"/>
+						</td>
+						<td>
+							<input type="submit" class="btn_b" value="삭제" formaction="deleteBusClass.jsp"/>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+	
+	<h3 id="scheduleH3">배차 정보</h3>
+	<table id="scheduleTable">
+		<tr id="tRheader">
+			<th>출발지</th>
+			<th>도착지</th>
+			<th>출발시간</th>
+			<th>소요시간</th>
+			<th>버스등급</th>
+			<th>가격</th>
+			<th></th>
+		</tr>
+		
 		<%
-		String[] str2 = new String[2];
-		for(int i=0; i<VIPList.size(); i++)
+		int j=0;
+		for(int i=0; i<scheduleInfoList.size(); i++)
 		{
-			str2 = VIPList.get(i).split(":");
+			
+			scheduleInfoStr = hostDao.showSchedule(scheduleInfoList.get(i));
+			str = scheduleInfoStr.split(" ");
+			
 			%>
+			<form action="deleteSchedule.jsp" method="post">
 			<tr>
-				<td><%= str2[0]%></td>
-				<td><%= str2[1]%></td>
+				<td><input name = "departure_<%=j%>" class="scheduleData" type="text" readonly value="<%=str[0]%>"></td>
+				<td><input name = "arrival_<%=j%>" class="scheduleData" type="text" readonly value="<%=str[1]%>"></td>
+				<td><input name = "departuretime_<%=j%>" class="scheduleData" type="text" readonly value="<%=str[2]%>"></td>
+				<td><input name = "requiredtime_<%=j%>" class="scheduleData" type="text" readonly value="<%=str[3]%>"></td>
+				<td><input name = "busclass_<%=j%>" class="scheduleData" type="text" readonly value="<%=str[4]%>"></td>
+				<td><input name = "price_<%=j%>" class="scheduleData" type="text" readonly value="<%=str[5]%>"></td>
+				<input type="hidden" name = "selectIdx" value = "<%=j%>" >
+				<td><input class = "btn" id="deleteBtn" type="submit" value="삭제"/></td>
 			</tr>
+			</form>
 			<%
+			j++;
 		}
 		%>
-		</table>
-		
-		<form id="terminalBusClassForm" action="addBusClass.jsp" method="post">
-			<table>
-				<tr>
-					<td class="left"> 터미널 </td>
-					<td>
-						<select name="terminal_b" form="terminalBusClassForm" class="right">
-						<% 
-							for(int i=0; i<terminalList.size(); i++) {
-								out.println("<option value='" + terminalList.get(i).getTerminalName() + "'>"
-												+ terminalList.get(i).getTerminalName() + "</option>");
-							}
-						%>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td class="left"> 버스 등급 </td>
-					<td>
-						<select name="busClass_b" form="terminalBusClassForm" class="right"> 
-							<option value="0">일반</option>
-							<option value="1">우등</option>
-							<option value="2">프리미엄</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<input type="submit" class="btn" value="추가"/>
-					</td>
-					<td>
-						<input type="submit" class="btn" value="삭제" formaction="deleteBusClass.jsp"/>
-					</td>
-				</tr>
-			</table>
-		</form>
+	</table>
 </body>
 </html>
