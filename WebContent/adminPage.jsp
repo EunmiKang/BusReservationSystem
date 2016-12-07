@@ -177,9 +177,8 @@
 					}
 					%>
 					</select>
+					<input type="hidden" name="busClassResult" value="<%=gettmp.toString()%>"/>
 				</td>
-				<input type="hidden" name="busClassResult" value="<%=gettmp.toString()%>"/>
-				<td class="left">가격</td>
 				<td>
 					<%
 						if(arrival != null) {
@@ -189,7 +188,6 @@
 										for(int j=0; j<fromToList.get(i).getArrivalTerminalLIST().size(); j++) {
 											if(arrival.equals(fromToList.get(i).getArrivalTerminalLIST().get(j).getARRIVALTERMINAL())) {
 												price = fromToList.get(i).getArrivalTerminalLIST().get(j).getPRICE();
-												out.println(price);
 											}
 										}
 									}

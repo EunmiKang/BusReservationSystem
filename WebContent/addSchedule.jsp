@@ -20,7 +20,7 @@
 	HOSTDAO hostDao = new HOSTDAO(HOSTID,HOSTPW);
 	//String scheduleNo, String fK_departureTerminal, String fK_arrivalTerminal, String fk_busNo,
 	//String departureTime, String remainingSeatsNum, String price, String requiredTime
-	SCHEDULEINFO SINFO = new SCHEDULEINFO("",departure,arrival,hostDao.returnBusNo(busClass),
+	SCHEDULEINFO SINFO = new SCHEDULEINFO("", departure,arrival,hostDao.returnBusNo(busClass),
 											departureTime,
 											price,requiredTime);
 	result = hostDao.insertSchedule(SINFO);

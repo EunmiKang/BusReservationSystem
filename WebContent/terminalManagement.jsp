@@ -64,10 +64,10 @@ function go() {
 				%>
 				<form action="changeTerminalInfo.jsp" method="post">
 				<tr>
-					<td><input name = "terminal_<%=j%>" type="text" readonly value="<%=str[0]%>"></td>
-					<td><input name = "address_<%=j%>" type="text" value="<%=str[1]%>"></td>
-					<td><input name = "phone_<%=j%>" type="text" value="<%=str[2]%>"></td>
-					<td><input name = "busClasses_<%=j%>" type="text" readonly value="<%=str[3]%>"></td>
+					<td><input name = "terminal_<%=j%>" class="scheduleData" type="text" readonly value="<%=str[0]%>"></td>
+					<td><input name = "address_<%=j%>" class="scheduleData" type="text" value="<%=str[1]%>"></td>
+					<td><input name = "phone_<%=j%>" class="scheduleData" type="text" value="<%=str[2]%>"></td>
+					<td><input name = "busClasses_<%=j%>" class="scheduleData" type="text" readonly value="<%=str[3]%>"></td>
 					<input type="hidden" name = "selectIdx" value = "<%=j%>">
 					<td><input class = "btn" id="changeBtn" type="submit" value="수정"/></td>
 					<td><input class = "btn" id="deleteBtn" formaction="deleteTerminal.jsp"type="submit" value="삭제"/></td>
