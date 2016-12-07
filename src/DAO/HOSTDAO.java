@@ -158,7 +158,7 @@ public class HOSTDAO {
 				rs2 = dao.select(conn, "SELECT * FROM FROM_TO WHERE DEPARTURE_TERMINAL = \'"+temp+"\'");
 				while(rs2.next()!=false){
 					terminalRequiredTimeList.add(
-							new TERMINALREQUIREDTIME(rs2.getString("ARRIVAL_TERMINAL"),rs2.getString("REQUIRED_TIME")));
+							new TERMINALREQUIREDTIME(rs2.getString("ARRIVAL_TERMINAL"),rs2.getString("REQUIRED_TIME"),rs2.getString("PRICE")));
 					
 				}
 				FTList.add(new FROMTODAO(temp, terminalRequiredTimeList));
