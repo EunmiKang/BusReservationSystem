@@ -22,7 +22,6 @@
 	//String departureTime, String remainingSeatsNum, String price, String requiredTime
 	SCHEDULEINFO SINFO = new SCHEDULEINFO("",departure,arrival,hostDao.returnBusNo(busClass),
 											departureTime,
-											hostDao.returnOriginSeatNum(busClass),
 											price,requiredTime);
 	result = hostDao.insertSchedule(SINFO);
 	

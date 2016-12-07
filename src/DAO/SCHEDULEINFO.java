@@ -9,7 +9,6 @@ public class SCHEDULEINFO {
 	private String FK_arrivalTerminal;
 	private String FK_busNo;
 	private String departureTime;
-	private String remainingSeatsNum;
 	private String price;
 	private String requiredTime;
 	
@@ -43,12 +42,6 @@ public class SCHEDULEINFO {
 	public void setDepartureTime(String departureTime) {
 		this.departureTime = departureTime;
 	}
-	public String getRemainingSeatsNum() {
-		return remainingSeatsNum;
-	}
-	public void setRemainingSeatsNum(String remainingSeatsNum) {
-		this.remainingSeatsNum = remainingSeatsNum;
-	}
 	public String getPrice() {
 		return price;
 	}
@@ -67,7 +60,6 @@ public class SCHEDULEINFO {
 						String fK_arrivalTerminal, 
 						String fk_busNo,
 						String departureTime, 
-						String remainingSeatsNum, 
 						String price, 
 						String requiredTime) {
 		super();
@@ -76,7 +68,6 @@ public class SCHEDULEINFO {
 		this.FK_arrivalTerminal = fK_arrivalTerminal;
 		this.FK_busNo = fk_busNo;
 		this.departureTime = departureTime;
-		this.remainingSeatsNum = remainingSeatsNum;
 		this.price = price;
 		this.requiredTime = requiredTime;
 	}
