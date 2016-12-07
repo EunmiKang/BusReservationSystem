@@ -60,7 +60,7 @@
 	</form>
 	<form id="testForm2" action="adminPage.jsp" method="post">
 	</form>
-	<form name="addScheduleForm" action="addSchedule.jsp" method="post">
+	<form id="addScheduleForm" action="addSchedule.jsp" method="post">
 		<table id="addTable">
 			<tr>
 				<td class="left">출발지</td>
@@ -161,23 +161,23 @@
 								String tmpBusClass  = terminalList.get(i).getBusClass();
 								tmp = tmpBusClass.split("");
 								if(tmp[0].equals("1")) {
-									gettmp = "100";
-									out.println("<option value=\"일반\">일반</option>");
+									gettmp = "일반";
+									out.println("<option value='일반'>일반</option>");
 								}
 								if(tmp[1].equals("1")) {
-									gettmp = "010";
-									out.println("<option value=\"우등\">우등</option>");
+									gettmp = "우등";
+									out.println("<option value='우등'>우등</option>");
 								}
 								if(tmp[2].equals("1")) {
-									gettmp = "001";
-									out.println("<option value=\"프리미엄\">프리미엄</option>");
+									gettmp = "프리미엄";
+									out.println("<option value='프리미엄'>프리미엄</option>");
 								}
 							}
 						}
 					}
 					%>
 					</select>
-					<input type="hidden" name="busClassResult" value="<%=gettmp.toString()%>"/>
+					<input type="hidden" name="busClassResult" value="<%=gettmp%>"/>
 				</td>
 				<td>
 					<%

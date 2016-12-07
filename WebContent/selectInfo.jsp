@@ -102,9 +102,9 @@
 				<td>
 					<select name="busClass" form="selectInfoForm" class="right">
 						<option value="전체등급">전체등급</option>
-						<option value="일반">일반</option>
-						<option value="우등">우등</option>
-						<option value="프리미엄">프리미엄</option>
+						<option value="1">일반</option>
+						<option value="2">우등</option>
+						<option value="4">프리미엄</option>
 					</select>
 				</td>
 			</tr>

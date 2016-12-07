@@ -13,7 +13,7 @@
 	String arrival = (String) request.getParameter("arrivalResult");
 	String departureTime = (String) request.getParameter("departureTime");
 	String requiredTime = (String) request.getParameter("requiredTimeResult");
-	String busClass = (String) request.getParameter("busClassResult");
+	String busClass = (String) request.getParameter("busClass");
 	String price = (String) request.getParameter("price");
 	
 	//DAO dao = new DAO();
