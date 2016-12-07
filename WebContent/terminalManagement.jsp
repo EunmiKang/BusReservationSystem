@@ -28,10 +28,19 @@
 function goAdd() {
 location.href = "addTerminal.html";
 }
+function go() {
+	location.href = "adminPage.jsp";
+}
 </script>
 </head>
 <body>
-<button class="btn" onclick="goAdd()">터미널 추가</button>
+<h1>관리자 페이지</h1>
+<table>
+<tr>
+<td><button class="btn_r" onclick="goAdd()">터미널 추가</button></td>
+<td><button class="btn_r" onclick="go()">HOME</button></td>
+</tr>
+</table>
 <table id="scheduleTable">
 
 			<tr>
@@ -39,6 +48,8 @@ location.href = "addTerminal.html";
 				<th>터미널 주소</th>
 				<th>터미널 전화번호</th>
 				<th>터미널 등급</th>
+				<th></th>
+				<th></th>
 			</tr>
 			
 			<%
@@ -51,14 +62,11 @@ location.href = "addTerminal.html";
 				str = terminalInfoStr.split(":");
 				
 				%>
-				
-				
-				
 				<form action="changeTerminalInfo.jsp" method="post">
 				<tr>
 					<td><input name = "terminal_<%=j%>" type="text" readonly value="<%=str[0]%>"></td>
-					<td><input name = "address_<%=j%>" type="text" readonly value="<%=str[1]%>"></td>
-					<td><input name = "phone_<%=j%>" type="text" readonly value="<%=str[2]%>"></td>
+					<td><input name = "address_<%=j%>" type="text" value="<%=str[1]%>"></td>
+					<td><input name = "phone_<%=j%>" type="text" value="<%=str[2]%>"></td>
 					<td><input name = "busClasses_<%=j%>" type="text" readonly value="<%=str[3]%>"></td>
 					<input type="hidden" name = "selectIdx" value = "<%=j%>">
 					<td><input class = "btn" id="changeBtn" type="submit" value="수정"/></td>
