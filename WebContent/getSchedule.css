@@ -90,6 +90,10 @@ body {
 	font-size: 15pt;
 }
 
+.seat0:hover {
+	cursor: pointer;
+}
+
 .emptyRow {
 	height: 50px;
 }
