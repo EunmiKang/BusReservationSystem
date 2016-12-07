@@ -5,6 +5,8 @@ import java.sql.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.util.ArrayList;
+import java.util.List;
 
 public class USERDAO {
 	private String USERID = null;
@@ -98,6 +100,7 @@ public class USERDAO {
 			rs = dao.select(conn, "SELECT M_ID FROM MEMBER WHERE M_ID = \'"+USERID+"\'");
 			if(rs.next()==true)
 			{
+				dao.cancel();
 				return false;
 			}
 			else{
@@ -112,11 +115,13 @@ public class USERDAO {
 				}catch(Exception e){
 					System.out.println("[*]	JOIN INSERT error: \n" + e.getMessage());
 				}
+				dao.cancel();
 				return true;
 			}
 		} catch (Exception e) {
 			System.out.println("[*]	JOIN SELECT error: \n" + e.getMessage());
 		}
+		dao.cancel();
 		return false;
 	}
 	
@@ -132,21 +137,27 @@ public class USERDAO {
 			rs = dao.select(conn, "SELECT M_ID,M_PW FROM MEMBER WHERE M_ID = \'"+USERID+"\'");
 			if(rs.next()==false)
 			{
+				dao.cancel();
 				return 0;//ID�� �������� ���� ��
 			}else
 			{
 				if(rs.getString("M_PW").equals(USERPW)){
-					if(rs.getString("M_ID").equals("ADMIN"))
+					if(rs.getString("M_ID").equals("ADMIN")){
+						dao.cancel();						
 						return 3;//�������ϋ�
+					}
+					dao.cancel();
 					return 1;//login!
 				}
-				else
+				else{
+					dao.cancel();					
 					return 2;//PW Ʋ���� ��
+				}
 			}
 		}catch(Exception e){
 			System.out.println("[*] LOGIN SELECT result error: \n" + e.getMessage());
 		}
-		
+		dao.cancel();
 		return 1;	
 	}
 	
@@ -166,6 +177,7 @@ public class USERDAO {
 		}catch(Exception e){
 			System.out.println("[*] SELECTUSERINFO SELECT error: \n" + e.getMessage());
 		}
+		dao.cancel();
 		return userInfo;
 	}
 	
@@ -178,13 +190,18 @@ public class USERDAO {
 		conn = dao.getConn();
 		try{
 			rs = dao.delete(conn, "DELETE FROM MEMBER WHERE M_ID = \'"+USERID+"\'");
-			if(rs == true)
+			if(rs == true){
+				dao.cancel();				
 				return true;
-			else
+			}
+			else{
+				dao.cancel();				
 				return false;
+			}
 		}catch(Exception e){
 			System.out.println("[*]	DEACTIVATEACCOUNT DELETE error: \n" + e.getMessage());
 		}
+		dao.cancel();
 		return false;
 	}
 	
@@ -198,10 +215,88 @@ public class USERDAO {
 		try{
 			dao.updateBranch(conn, "MEMBER", "M_PW", changePW, "M_ID = \'"+USERID+"\'");
 			dao.updateBranch(conn, "MEMBER", "M_PHONENUM", changePhoneNum, "M_ID = \'"+USERID+"\'");
+			dao.cancel();
 			return true;
 		}catch(Exception e){
 			System.out.println("[*] changeUserSetting CHANGE error: \n" + e.getMessage());
 		}
+		dao.cancel();
 		return false;
+	}
+	
+	public List<RESERVATIONSTATUS> returnStatusList(RESERVATIONSTATUS reStatus){
+		
+		Connection conn = null;
+		String scheduleNo = null;
+		ResultSet rs = null;
+		ResultSet rs2 = null;
+		RESERVATIONSTATUS RSS = null;
+		List<RESERVATIONSTATUS> RSSList = new ArrayList<>();
+		DAO dao = new DAO();
+		dao.createConn();
+		conn = dao.getConn();
+		try{
+			if(reStatus.getBUSCLASS().equals("전체등급")){
+			rs = dao.select(conn, "SELECT * FROM SCHEDULE_INFO WHERE "
+					+ "DEPARTURE_TERMINAL = '"+reStatus.getDEPARTURETERMINAL()
+					+"'AND ARRIVAL_TERMINAL = '"+reStatus.getARRIVALTERMINAL()+"' "
+					+ "ORDER BY DEPARTURE_TIME");
+			}else{
+				rs = dao.select(conn, "SELECT * FROM SCHEDULE_INFO WHERE "
+						+ "DEPARTURE_TERMINAL = '"+reStatus.getDEPARTURETERMINAL()
+						+"'AND ARRIVAL_TERMINAL = '"+reStatus.getARRIVALTERMINAL()
+						+"'AND BUS_NO = '"+reStatus.getBUSCLASS()+"' "
+						+ "ORDER BY DEPARTURE_TIME");
+			}
+			while(rs.next()!=false){
+				if(rs.getString("DEPARTURE_TIME").compareTo(reStatus.getDEPARTURETIME()) >= 0){
+					scheduleNo = rs.getString("SCHEDULE_NO");
+					rs2 = dao.select(conn, "SELECT * FROM RESERVATION_STATUS_TABLE WHERE "
+							+ "SCHEDULE_NO = '"+scheduleNo+"' AND DEPARTURE_DATE = '"+reStatus.getDEPARTUREDATA()+"'");	
+					if(rs2.next()!=false){
+					RSSList.add(new RESERVATIONSTATUS(reStatus.getDEPARTURETERMINAL(),
+													reStatus.getARRIVALTERMINAL(), 
+													reStatus.getDEPARTUREDATA(),
+													rs.getString("DEPARTURE_TIME"),
+													rs.getString("BUS_NO"),
+													rs.getString("REQUIRED_TIME"),
+													rs.getString("PRICE"),
+													rs2.getString("SEAT_INFO"), 
+													rs2.getString("REMAINING_SEATS_NUM")));
+					}
+				}
+			}
+			dao.cancel();
+			return RSSList;
+		}catch(Exception e){
+			System.out.println("[*] returnStatusList error: \n" + e.getMessage());
+		}
+		dao.cancel();
+		return null;
+	}
+	
+	public String showReStatus(RESERVATIONSTATUS reStatus){
+		String STATUS = null;
+		try {
+			
+			STATUS = reStatus.getDEPARTURETIME() + " " + returnBusClass(reStatus.getBUSCLASS())+ " "
+					+ reStatus.getREQUIREDTIME() + " " + reStatus.getPRICE() + " "
+					+ reStatus.getREMAINSEAT() + " " + reStatus.getSEATINFO();
+			if (STATUS != null) {
+				return STATUS;
+			}
+		} catch (Exception e) {
+			System.out.println("[*]	SHOWSCHEDULE error: \n" + e.getMessage());
+		}
+		return null;
+	}
+	
+	public String returnBusClass(String a){
+		if(a.equals("1"))
+			return "일반";
+		else if(a.equals("2"))
+			return "우등";
+		else
+			return "프리미엄";
 	}
 }

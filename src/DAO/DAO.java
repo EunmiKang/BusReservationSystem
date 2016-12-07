@@ -39,6 +39,16 @@ public class DAO {
 	public Connection getConn() {
 		return conn;
 	}
+	
+	public void cancel() {
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			System.out.println("[*]	CLOSE ERROR : \n" + e.getMessage());
+		}
+		
+	}
+
 
 	public boolean insert(Connection conn, String query) {
 		try {
@@ -157,10 +167,12 @@ public class DAO {
 				}
 				FTList.add(new FROMTODAO(temp, terminalRequiredTimeList));
 			}
+			dao.cancel();
 			return FTList;
 		} catch (Exception e) {
 			System.out.println("[*]	JOIN SELECT error: \n" + e.getMessage());
 		}
+		dao.cancel();
 		return null;
 	}
 }

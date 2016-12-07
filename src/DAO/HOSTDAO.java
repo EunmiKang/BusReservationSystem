@@ -49,10 +49,12 @@ public class HOSTDAO {
 						rs.getString("PRICE"), rs.getString("REQUIRED_TIME"));
 				SINFOLIST.add(SINFO);
 			}
+			dao.cancel();
 			return SINFOLIST;
 		} catch (Exception e) {
 			System.out.println("[*]	JOIN SELECT error: \n" + e.getMessage());
 		}
+		dao.cancel();
 		return null;
 	}
 
@@ -97,30 +99,6 @@ public class HOSTDAO {
 		return null;
 	}
 
-	public boolean addSchedule() {
-		Connection conn = null;
-		ResultSet rs = null;
-
-		DAO dao = new DAO();
-		dao.createConn();
-		conn = dao.getConn();
-
-		try {
-
-			/*
-			 * dao.insert(conn, "INSERT INTO " +
-			 * "MEMBER(M_ID,M_PW,M_NAME,M_PHONENUM,M_TOTALPOINT,M_CURRENTPOINT)"
-			 * + " VALUES('"
-			 * +USERID+"','"+USERPW+"','"+USERNAME+"','"+USERPHONENUM+"',0,0)");
-			 */
-			return true;
-
-		} catch (Exception e) {
-			System.out.println("[*]	JOIN SELECT error: \n" + e.getMessage());
-		}
-		return false;
-	}
-
 	public boolean findDepartureTerminal() {
 		Connection conn = null;
 		ResultSet rs = null;
@@ -130,11 +108,13 @@ public class HOSTDAO {
 		conn = dao.getConn();
 		try {
 			rs = dao.select(conn, "SELECT TERMINALNAME FROM TERMINAL");
+			dao.cancel();
 			return true;
 
 		} catch (Exception e) {
 			System.out.println("[*]	JOIN SELECT error: \n" + e.getMessage());
 		}
+		dao.cancel();
 		return false;
 	}
 	
@@ -164,10 +144,12 @@ public class HOSTDAO {
 				}
 				FTList.add(new FROMTODAO(temp, terminalRequiredTimeList));
 			}
+			dao.cancel();
 			return FTList;
 		} catch (Exception e) {
 			System.out.println("[*]	JOIN SELECT error: \n" + e.getMessage());
 		}
+		dao.cancel();
 		return null;
 	}
 	
@@ -187,37 +169,22 @@ public class HOSTDAO {
 						rs.getString("TELENUM"), rs.getString("BUSCLASS"));
 				resultList.add(terminal);
 			}
+			dao.cancel();
 			return resultList;
 		} catch (Exception e) {
 			System.out.println("[*] loadTerminal SELECT error: \n" + e.getMessage());
 		}
+		dao.cancel();
 		return null;
 	}
 	
 	public String returnBusNo(String busClass){
-		Connection conn = null;
-		ResultSet rs = null;
-		String returnstr=null;
-		DAO dao = new DAO();
-		dao.createConn();
-		conn = dao.getConn();	
-		
-		try {
-			returnstr = returnNameOfBusClass(busClass);
-			rs = dao.select(conn, "SELECT * FROM BUS WHERE BUSCLASS = \'"+returnstr+"\'");
-			if(rs.next()==true)
-			{
-				returnstr = rs.getString("BUSNO");
-				return returnstr;
-			}
-			else
-			{
-				return null;
-			}
-		} catch (Exception e) {
-			System.out.println("[*]	returnBusClass SELECT error: \n" + e.getMessage());
-		}
-		return null;
+		if(busClass.equals("일반"))
+			return "1";
+		else if(busClass.equals("우등"))
+			return "2";
+		else return "4";
+
 	}
 	
 
@@ -239,8 +206,6 @@ public class HOSTDAO {
 		conn = dao.getConn();	
 		String price="";
 		float tempPrice;
-		HOSTDAO hostDao = new HOSTDAO(null, null);
-		
 		
 		try {
 			rs = dao.select(conn, "SELECT * FROM SCHEDULE_INFO "
@@ -250,16 +215,19 @@ public class HOSTDAO {
 			if(!SINFO.getFK_arrivalTerminal().equals("선택")&&!SINFO.getFK_arrivalTerminal().equals("null"))
 			{
 				price = SINFO.getPrice();
+				
 				if(rs.next()==false){
-					if(SINFO.getFK_busNo().equals("1")){
+					
+					if(SINFO.getFK_busNo().equals("2")){
 						float test = Float.parseFloat(price);
 						tempPrice = test * (float)1.2;
 						price = Integer.toString((int)tempPrice);
-					}else if(SINFO.getFK_busNo().equals("프리미엄")){
+					}else if(SINFO.getFK_busNo().equals("4")){
 						float test = Float.parseFloat(price);
 						tempPrice = test * (float)1.4;
 						price = Integer.toString((int)tempPrice);
 					}
+					
 					if(dao.insert(conn, "INSERT INTO "
 							+"SCHEDULE_INFO(SCHEDULE_NO, DEPARTURE_TERMINAL, ARRIVAL_TERMINAL, BUS_NO, DEPARTURE_TIME, PRICE, REQUIRED_TIME) "
 							+"VALUES(SCHEDULE_NO.NEXTVAL,'"+SINFO.getFK_departureTerminal()+"','"+SINFO.getFK_arrivalTerminal()+"',"+SINFO.getFK_busNo()
@@ -269,21 +237,23 @@ public class HOSTDAO {
 						/*
 						 * RESERVATIONSTATUS 객체를 만들어서 넣자
 						 */
-						
-						if(dao.insert(conn, "INSERT INTO RESERVATION_STATUS_TABLE(SCHEDULE_NO, DEPARTURE_DATE, SEAT_INFO, REMAINING_SEATS_NUM) "
-								+ "VALUES(SCHEDULE_NO.CURRVAL,'"+getToday(0)+"','"+getSeatInfo(SINFO.getFK_busNo())+"',"+getSeatNumtoBusNo(SINFO.getFK_busNo())+")"))
-						{
-							
-							return true;
+						for(int i=0; i<7; i++){
+						dao.insert(conn, "INSERT INTO RESERVATION_STATUS_TABLE(SCHEDULE_NO, DEPARTURE_DATE, SEAT_INFO, REMAINING_SEATS_NUM) "
+								+ "VALUES(SCHEDULE_NO.CURRVAL,'"+getToday(i)+"','"+getSeatInfo(SINFO.getFK_busNo())+"',"+getSeatNumtoBusNo(SINFO.getFK_busNo())+")");
 						}
+						dao.cancel();
+							return true;
 					}
-					
 				}
 			}
-			else return false;
+			else{
+				dao.cancel();
+				return false;
+			}
 		} catch (Exception e) {
 			System.out.println("[*]	insertSchedule INSERT error: \n" + e.getMessage());
 		}
+		dao.cancel();
 		return false;
 	}
 	
@@ -291,8 +261,8 @@ public class HOSTDAO {
 		SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy-MM-dd", Locale.KOREA );
 	      Date currentTime = new Date ( );
 	      Date tmTime = new Date();
-	      String mTime = mSimpleDateFormat.format ( currentTime );
 	      tmTime.setTime(currentTime.getTime() + (1000*60*60*24)*day);
+	      String mTime = mSimpleDateFormat.format ( tmTime );
 	      return mTime;
 	}
 	
@@ -339,13 +309,16 @@ public class HOSTDAO {
 					+ "WHERE DEPARTURE_TERMINAL = '"+departure
 					+"' AND ARRIVAL_TERMINAL = '"+arrival
 					+"' AND DEPARTURE_TIME = '"+departureTime+"'")){
+				dao.cancel();
 				return true;
 			}
 			else
+				dao.cancel();
 				return false;
 		} catch (Exception e) {
 			System.out.println("[*]	insertSchedule INSERT error: \n" + e.getMessage());
 		}
+		dao.cancel();
 		return false;
 	}
 	
@@ -367,6 +340,7 @@ public class HOSTDAO {
 		} catch (Exception e) {
 			System.out.println("[*]	JOIN SELECT error: \n" + e.getMessage());
 		}
+		dao.cancel();
 		return members;
 	}
 	
@@ -392,14 +366,18 @@ public class HOSTDAO {
 						}
 					}
 					dao.updateBranch(conn, "TERMINAL", "BUSCLASS", changeValue , "TERMINALNAME = '" + terminal + "'");
+					dao.cancel();
 					return true;
 				}
-				else
+				else{
+					dao.cancel();					
 					return false;
+				}
 			}
 		} catch (Exception e) {
 			System.out.println("[*]	addBusClass UPDATE error: \n" + e.getMessage());
 		}
+		dao.cancel();
 		return false;
 	}
 	
@@ -425,14 +403,17 @@ public class HOSTDAO {
 						}
 					}
 					dao.updateBranch(conn, "TERMINAL", "BUSCLASS", changeValue , "TERMINALNAME = '" + terminal + "'");
+					dao.cancel();
 					return true;
 				}
 				else
+					dao.cancel();
 					return false;
 			}
 		} catch (Exception e) {
 			System.out.println("[*]	deleteBusClass UPDATE error: \n" + e.getMessage());
 		}
+		dao.cancel();
 		return false;
 	}
 	
@@ -448,13 +429,18 @@ public class HOSTDAO {
 				dao.updateBranch(conn, "TERMINAL", "ADDRESS", changeaddress , "TERMINALNAME = '" + terminal + "'")
 				&&	
 				dao.updateBranch(conn, "TERMINAL", "TELENUM", changephone , "TERMINALNAME = '" + terminal + "'")
-			)
+			){
+				dao.cancel();
 				return true;
-			else return false;
+			}
+			else {
+				dao.cancel();
+				return false;
+			}
 		}catch(Exception e) {
 			System.out.println("[*]	deleteBusClass UPDATE error: \n" + e.getMessage());
 		}
-		
+		dao.cancel();
 		return false;
 	}
 	
@@ -466,12 +452,16 @@ public class HOSTDAO {
 		conn = dao.getConn();
 		try {
 			if(dao.delete(conn, "DELETE FROM TERMINAL WHERE TERMINALNAME = '" + terminal + "'")){
+				dao.cancel();
 				return true;
-			}else
+			}else{
+				dao.cancel();				
 				return false;
+			}
 		} catch (Exception e) {
 			System.out.println("[*]	deleteBusClass DELETE error: \n" + e.getMessage());
 		}
+		dao.cancel();
 		return false;
 	}
 
@@ -484,12 +474,18 @@ public class HOSTDAO {
 		conn = dao.getConn();
 		try {
 			if(dao.insert(conn, "INSERT INTO TERMINAL(TERMINALNAME, ADDRESS, TELENUM, BUSCLASS)"
-					+ " VALUES('"+terminalName+"','"+terminalAddress+"','"+terminalPhone+"','100')"))
+					+ " VALUES('"+terminalName+"','"+terminalAddress+"','"+terminalPhone+"','100')")){
+				dao.cancel();				
 				return true;
-			else return false;
+			}
+			else{
+				dao.cancel();
+				return false;
+			}
 		}catch(Exception e){
 			System.out.println("[*]	insertTerminal INSERT error: \n" + e.getMessage());
 		}
+		dao.cancel();
 		return false;
 	}
 	
