@@ -69,6 +69,32 @@ public class HOSTDAO {
 		}
 		return null;
 	}
+	
+	public String showTerminalList(TERMINALDAO TDAO) {
+		String INFO = null;
+		String tClass = null;
+		String className = "";
+		try {
+			
+			tClass = TDAO.getBusClass();
+			if(tClass.charAt(0) == '1')
+				className += "일반 ";
+			if(tClass.charAt(1) == '1')
+				className += "우등 ";
+			if(tClass.charAt(2) == '1')
+				className += "프리미엄 ";
+			
+			INFO = TDAO.getTerminalName() + ":" + TDAO.getAddress() + ":" +
+					TDAO.getTeleNum() +":"+ className;
+			
+			if (INFO != null) {
+				return INFO;
+			}
+		} catch (Exception e) {
+			System.out.println("[*]	SHOWSCHEDULE error: \n" + e.getMessage());
+		}
+		return null;
+	}
 
 	public boolean addSchedule() {
 		Connection conn = null;
@@ -162,7 +188,7 @@ public class HOSTDAO {
 			}
 			return resultList;
 		} catch (Exception e) {
-			System.out.println("[*]	JOIN SELECT error: \n" + e.getMessage());
+			System.out.println("[*] loadTerminal SELECT error: \n" + e.getMessage());
 		}
 		return null;
 	}
@@ -351,4 +377,80 @@ public class HOSTDAO {
 		}
 		return false;
 	}
+	
+	public boolean changeTerminalClass(String terminal, String changeaddress, String changephone){
+		Connection conn = null;
+		ResultSet rs = null;
+		
+		DAO dao = new DAO();
+		dao.createConn();
+		conn = dao.getConn();
+		try{
+			if(
+				dao.updateBranch(conn, "TERMINAL", "ADDRESS", changeaddress , "TERMINALNAME = '" + terminal + "'")
+				&&	
+				dao.updateBranch(conn, "TERMINAL", "TELENUM", changephone , "TERMINALNAME = '" + terminal + "'")
+			)
+				return true;
+			else return false;
+		}catch(Exception e) {
+			System.out.println("[*]	deleteBusClass UPDATE error: \n" + e.getMessage());
+		}
+		
+		return false;
+	}
+	
+	public boolean deleteTerminal(String terminal){
+		Connection conn = null;
+				
+		DAO dao = new DAO();
+		dao.createConn();
+		conn = dao.getConn();
+		try {
+			if(dao.delete(conn, "DELETE FROM TERMINAL WHERE TERMINALNAME = '" + terminal + "'")){
+				return true;
+			}else
+				return false;
+			/*if(rs.next() != false) {
+				String terminalBusClass = rs.getString("BUSCLASS");
+				if(terminalBusClass.charAt(busClassIndex) == '1'){	//delete
+					String changeValue = "";
+					for(int i=0; i<3; i++) {
+						if(i==busClassIndex) {
+							changeValue += "0";
+						}
+						else {
+							changeValue += terminalBusClass.charAt(i);
+						}
+					}
+					dao.updateBranch(conn, "TERMINAL", "BUSCLASS", changeValue , "TERMINALNAME = '" + terminal + "'");
+					return true;
+				}
+				else
+					return false;
+			}*/
+		} catch (Exception e) {
+			System.out.println("[*]	deleteBusClass DELETE error: \n" + e.getMessage());
+		}
+		return false;
+	}
+
+	public boolean insertTerminal(String terminalName, String terminalAddress, String terminalPhone){
+		Connection conn = null;
+		ResultSet rs = null;
+		
+		DAO dao = new DAO();
+		dao.createConn();
+		conn = dao.getConn();
+		try {
+			if(dao.insert(conn, "INSERT INTO TERMINAL(TERMINALNAME, ADDRESS, TELENUM, BUSCLASS)"
+					+ " VALUES('"+terminalName+"','"+terminalAddress+"','"+terminalPhone+"','000')"))
+				return true;
+			else return false;
+		}catch(Exception e){
+			System.out.println("[*]	insertTerminal INSERT error: \n" + e.getMessage());
+		}
+		return false;
+	}
+	
 }

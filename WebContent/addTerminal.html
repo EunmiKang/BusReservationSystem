@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+	<title> 버스 예매 시스템 </title>
+	<link type="text/css" rel="stylesheet" href="join.css"/>
+	<script>
+		function goMain() {
+			location.href = "terminalManagement.jsp";
+		}
+	</script>
+</head>
+<body>
+<h1 onclick="goMain()">BUS TAJA</h1>
+	<div id="joinForm">
+		<h2> 터미널 추가 </h2>
+		<form name="joinForm" action="addTerminal.jsp" method="post">
+			<table>
+				<tr>
+					<td class="left">터미널 이름</td>
+					<td>
+						<input type="text" name="terminalName" class="right" required/>
+					</td>
+				</tr>
+				<tr>
+					<td class="left">터미널 주소</td>
+					<td>
+						<input type="text" name="terminalAddress" class="right" required/>
+					</td>
+				</tr>
+				<tr>
+					<td class="left"> 터미널 전화번호</td>
+					<td>
+						<input type="text" name="terminalPhone" class="right" required/>
+					</td>
+				</tr>
+				<!-- 가입 버튼 -->
+				<tr>
+					<td colspan="2">
+						<input id="joinBtn" type="submit" value="Add Terminal"/>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</body>
+</html>
