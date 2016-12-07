@@ -175,4 +175,71 @@ public class DAO {
 		dao.cancel();
 		return null;
 	}
+	
+public List<RESERVATIONSTATUS> returnStatusList2(RESERVATIONSTATUS reStatus){
+		
+		Connection conn = null;
+		String scheduleNo = null;
+		ResultSet rs = null;
+		ResultSet rs2 = null;
+		RESERVATIONSTATUS RSS = null;
+		List<RESERVATIONSTATUS> RSSList = new ArrayList<>();
+		DAO dao = new DAO();
+		dao.createConn();
+		conn = dao.getConn();
+		try{
+			rs = dao.select(conn, "SELECT * FROM SCHEDULE_INFO WHERE "
+					+ "DEPARTURE_TERMINAL = '"+reStatus.getDEPARTURETERMINAL()
+					+"'AND ARRIVAL_TERMINAL = '"+reStatus.getARRIVALTERMINAL()+"' "
+					+ "ORDER BY DEPARTURE_TIME");
+			while(rs.next()!=false){
+					scheduleNo = rs.getString("SCHEDULE_NO");
+					rs2 = dao.select(conn, "SELECT * FROM RESERVATION_STATUS_TABLE WHERE "
+							+ "SCHEDULE_NO = '"+scheduleNo+"' AND DEPARTURE_DATE = '"+reStatus.getDEPARTUREDATA()+"'");	
+					if(rs2.next()!=false){
+					RSSList.add(new RESERVATIONSTATUS(reStatus.getDEPARTURETERMINAL(),
+													reStatus.getARRIVALTERMINAL(), 
+													reStatus.getDEPARTUREDATA(),
+													rs.getString("DEPARTURE_TIME"),
+													rs.getString("BUS_NO"),
+													rs.getString("REQUIRED_TIME"),
+													rs.getString("PRICE"),
+													rs2.getString("SEAT_INFO"), 
+													rs2.getString("REMAINING_SEATS_NUM")));
+					}
+				
+			}
+			dao.cancel();
+			return RSSList;
+		}catch(Exception e){
+			System.out.println("[*] returnStatusList error: \n" + e.getMessage());
+		}
+		dao.cancel();
+		return null;
+	}
+
+	public String showReStatus(RESERVATIONSTATUS reStatus){
+		String STATUS = null;
+		try {
+			
+			STATUS = reStatus.getDEPARTURETIME() + " " + returnBusClass(reStatus.getBUSCLASS())+ " "
+					+ reStatus.getREQUIREDTIME() + " " + reStatus.getPRICE() + " "
+					+ reStatus.getREMAINSEAT() + " " + reStatus.getSEATINFO();
+			if (STATUS != null) {
+				return STATUS;
+			}
+		} catch (Exception e) {
+			System.out.println("[*]	SHOWSCHEDULE error: \n" + e.getMessage());
+		}
+		return null;
+	}
+	
+	public String returnBusClass(String a){
+		if(a.equals("1"))
+			return "일반";
+		else if(a.equals("2"))
+			return "우등";
+		else
+			return "프리미엄";
+	}
 }
