@@ -299,4 +299,98 @@ public class USERDAO {
 		else
 			return "프리미엄";
 	}
+	
+public List<RESERVATIONSTATUS> returnStatusList2(RESERVATIONSTATUS reStatus){
+		
+		Connection conn = null;
+		String scheduleNo = null;
+		ResultSet rs = null;
+		ResultSet rs2 = null;
+		RESERVATIONSTATUS RSS = null;
+		List<RESERVATIONSTATUS> RSSList = new ArrayList<>();
+		DAO dao = new DAO();
+		dao.createConn();
+		conn = dao.getConn();
+		try{
+			rs = dao.select(conn, "SELECT * FROM SCHEDULE_INFO WHERE "
+					+ "DEPARTURE_TERMINAL = '"+reStatus.getDEPARTURETERMINAL()
+					+"'AND ARRIVAL_TERMINAL = '"+reStatus.getARRIVALTERMINAL()+"' "
+					+ "ORDER BY DEPARTURE_TIME");
+			while(rs.next()!=false){
+					scheduleNo = rs.getString("SCHEDULE_NO");
+					rs2 = dao.select(conn, "SELECT * FROM RESERVATION_STATUS_TABLE WHERE "
+							+ "SCHEDULE_NO = '"+scheduleNo+"' AND DEPARTURE_DATE = '"+reStatus.getDEPARTUREDATA()+"'");	
+					if(rs2.next()!=false){
+					RSSList.add(new RESERVATIONSTATUS(reStatus.getDEPARTURETERMINAL(),
+													reStatus.getARRIVALTERMINAL(), 
+													reStatus.getDEPARTUREDATA(),
+													rs.getString("DEPARTURE_TIME"),
+													rs.getString("BUS_NO"),
+													rs.getString("REQUIRED_TIME"),
+													rs.getString("PRICE"),
+													rs2.getString("SEAT_INFO"), 
+													rs2.getString("REMAINING_SEATS_NUM")));
+					}
+				
+			}
+			dao.cancel();
+			return RSSList;
+		}catch(Exception e){
+			System.out.println("[*] returnStatusList error: \n" + e.getMessage());
+		}
+		dao.cancel();
+		return null;
+	}
+	
+	public List<RESERVATIONINFO> returnReservationList(String USERID){
+		Connection conn = null;
+		String scheduleNo = null;
+		ResultSet rs = null;
+		ResultSet rs2 = null;
+		RESERVATIONSTATUS RSS = null;
+		List<RESERVATIONINFO> RSIList = new ArrayList<>();
+		DAO dao = new DAO();
+		dao.createConn();
+		conn = dao.getConn();
+		try{
+			rs = dao.select(conn, "SELECT * FROM RESERVATION WHERE "
+					+ "MEMBER_ID = '"+USERID+"'");
+			while(rs.next()!=false){
+					scheduleNo = rs.getString("SCHEDULE_NO");
+					rs2 = dao.select(conn, "SELECT * FROM SCHEDULE_INFO WHERE "
+							+ "SCHEDULE_NO = '"+scheduleNo+"'");	
+					if(rs2.next()!=false){
+						RSIList.add(new RESERVATIONINFO(
+								rs2.getString("DEPARTURE_TERMINAL"),
+								rs2.getString("ARRIVAL_TERMINAL"),
+								rs.getString("RESERVATION_DATE"),
+								rs2.getString("DEPARTURE_TIME"),
+								rs.getString("SEAT_NO")));
+					}
+				
+			}
+			dao.cancel();
+			return RSIList;
+		}catch(Exception e){
+			System.out.println("[*] returnStatusList error: \n" + e.getMessage());
+		}
+		dao.cancel();
+		return null;
+	}
+
+	public String showReservationInfo(RESERVATIONINFO reInfo){
+		String STATUS = null;
+		try {
+			
+			STATUS = reInfo.getDEPARTURETIME() + " " + reInfo.getARRIVAL()+ " "
+					+ reInfo.getRESERVATIONDATE() + " " + reInfo.getDEPARTURETIME() + " "
+					+ reInfo.getSEATNUM();
+			if (STATUS != null) {
+				return STATUS;
+			}
+		} catch (Exception e) {
+			System.out.println("[*]	showReservationInfo error: \n" + e.getMessage());
+		}
+		return null;
+	}
 }

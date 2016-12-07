@@ -32,13 +32,13 @@
 	<h1 onclick="goMain()">BUS TAJA</h1>
 	<form id="testForm" action="busInquiry.jsp" method="post">
 	</form>
-	<form action="busInquiry.jsp" method="post" id="busInquiryForm">
+	<form action="resultBusInquiry.jsp" method="post" id="busInquiryForm">
 		<h2>배차 조회</h2>
 		<table id="infoTable">
 			<tr>
 				<td class="left">출발지</td>
 				<td>
-					<select id="departure" name="departure" form="testForm" class="right" onchange="testPlz()">
+					<select id="departure" name="departure" form="testForm" required class="right" onchange="testPlz()">
 					<% 
 						if(departure != null) {
 							out.println("<option value=\"선택\">선택</option>");
@@ -68,7 +68,7 @@
 			<tr>
 				<td class="left">도착지</td>
 				<td>
-					<select name="arrival" form="busInquiryForm" class="right">
+					<select name="arrival" form="busInquiryForm"  required class="right">
 					<%
 					if(departure != null) {
 						out.println("<option value=\"선택\">선택</option>");
@@ -88,7 +88,7 @@
 			<tr>
 				<td class="left">출발날짜</td>
 				<td>
-					<input type="date" style="width:85%; height: 25px;"/>
+					<input type="date" name="departureDate" required style="width:85%; height: 25px;"/>
 				</td>
 			</tr>
 			<tr>

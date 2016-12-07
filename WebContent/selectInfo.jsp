@@ -38,7 +38,7 @@
 			<tr>
 				<td class="left">출발지</td>
 				<td>
-					<select id="departure" name="departure" form="testForm" class="right" onchange="testPlz()">
+					<select id="departure" name="departure" form="testForm" required class="right" onchange="testPlz()">
 					<% 
 						if(departure != null) {
 							out.println("<option value=\"선택\">선택</option>");
@@ -68,7 +68,7 @@
 			<tr>
 				<td class="left">도착지</td>
 				<td>
-					<select name="arrival" form="selectInfoForm" class="right">
+					<select name="arrival" form="selectInfoForm" required class="right">
 					<%
 					if(departure != null) {
 						out.println("<option value=\"선택\">선택</option>");
@@ -88,19 +88,19 @@
 			<tr>
 				<td class="left">출발날짜</td>
 				<td>
-					<input type="date" name="departureDate" style="width:85%; height: 25px;"/>
+					<input type="date" name="departureDate" required style="width:85%; height: 25px;"/>
 				</td>
 			</tr>
 			<tr>
 				<td class="left">출발시간</td>
 				<td>
-					<input type="time" name="departureTime" style="width:70%; height:25px;"/><span> 이후</span>
+					<input type="time" name="departureTime" required style="width:70%; height:25px;"/><span> 이후</span>
 				</td>
 			</tr>
 			<tr>
 				<td class="left">버스등급</td>
 				<td>
-					<select name="busClass" form="selectInfoForm" class="right">
+					<select name="busClass" form="selectInfoForm" required class="right">
 						<option value="전체등급">전체등급</option>
 						<option value="1">일반</option>
 						<option value="2">우등</option>
