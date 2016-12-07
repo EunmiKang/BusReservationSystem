@@ -45,7 +45,7 @@ public class HOSTDAO {
 			while (rs.next() != false) {
 				SINFO = new SCHEDULEINFO(rs.getString("SCHEDULE_NO"), rs.getString("DEPARTURE_TERMINAL"),
 						rs.getString("ARRIVAL_TERMINAL"), rs.getString("BUS_NO"), rs.getString("DEPARTURE_TIME"),
-						rs.getString("REMAINING_SEATS_NUM"), rs.getString("PRICE"), rs.getString("REQUIRED_TIME"));
+						rs.getString("PRICE"), rs.getString("REQUIRED_TIME"));
 				SINFOLIST.add(SINFO);
 			}
 			return SINFOLIST;
@@ -254,11 +254,14 @@ public class HOSTDAO {
 			{
 				if(rs.next()==false){
 					if(dao.insert(conn, "INSERT INTO "
-							+"SCHEDULE_INFO(SCHEDULE_NO, DEPARTURE_TERMINAL, ARRIVAL_TERMINAL, BUS_NO, DEPARTURE_TIME, REMAINING_SEATS_NUM, PRICE, REQUIRED_TIME) "
+							+"SCHEDULE_INFO(SCHEDULE_NO, DEPARTURE_TERMINAL, ARRIVAL_TERMINAL, BUS_NO, DEPARTURE_TIME, PRICE, REQUIRED_TIME) "
 							+"VALUES(SCHEDULE_NO.NEXTVAL,'"+SINFO.getFK_departureTerminal()+"','"+SINFO.getFK_arrivalTerminal()+"',"+SINFO.getFK_busNo()
-							+",'"+SINFO.getDepartureTime()+"',"+SINFO.getRemainingSeatsNum()+","+SINFO.getPrice()+",'"+SINFO.getRequiredTime()+"')")){
-					return true;	
-					}
+							+",'"+SINFO.getDepartureTime()+"','"+SINFO.getPrice()+"','"+SINFO.getRequiredTime()+"')")){
+						
+						
+						return true;	
+						}
+					
 				}
 			}
 			else return false;
@@ -411,24 +414,6 @@ public class HOSTDAO {
 				return true;
 			}else
 				return false;
-			/*if(rs.next() != false) {
-				String terminalBusClass = rs.getString("BUSCLASS");
-				if(terminalBusClass.charAt(busClassIndex) == '1'){	//delete
-					String changeValue = "";
-					for(int i=0; i<3; i++) {
-						if(i==busClassIndex) {
-							changeValue += "0";
-						}
-						else {
-							changeValue += terminalBusClass.charAt(i);
-						}
-					}
-					dao.updateBranch(conn, "TERMINAL", "BUSCLASS", changeValue , "TERMINALNAME = '" + terminal + "'");
-					return true;
-				}
-				else
-					return false;
-			}*/
 		} catch (Exception e) {
 			System.out.println("[*]	deleteBusClass DELETE error: \n" + e.getMessage());
 		}
@@ -444,7 +429,7 @@ public class HOSTDAO {
 		conn = dao.getConn();
 		try {
 			if(dao.insert(conn, "INSERT INTO TERMINAL(TERMINALNAME, ADDRESS, TELENUM, BUSCLASS)"
-					+ " VALUES('"+terminalName+"','"+terminalAddress+"','"+terminalPhone+"','000')"))
+					+ " VALUES('"+terminalName+"','"+terminalAddress+"','"+terminalPhone+"','100')"))
 				return true;
 			else return false;
 		}catch(Exception e){
