@@ -237,7 +237,8 @@ public class HOSTDAO {
 		DAO dao = new DAO();
 		dao.createConn();
 		conn = dao.getConn();	
-		
+		String price="";
+		float tempPrice;
 		HOSTDAO hostDao = new HOSTDAO(null, null);
 		
 		
@@ -248,11 +249,21 @@ public class HOSTDAO {
 					+"' AND DEPARTURE_TIME = '"+SINFO.getDepartureTime()+"'");
 			if(!SINFO.getFK_arrivalTerminal().equals("선택")&&!SINFO.getFK_arrivalTerminal().equals("null"))
 			{
+				price = SINFO.getPrice();
 				if(rs.next()==false){
+					if(SINFO.getFK_busNo().equals("1")){
+						float test = Float.parseFloat(price);
+						tempPrice = test * (float)1.2;
+						price = Integer.toString((int)tempPrice);
+					}else if(SINFO.getFK_busNo().equals("프리미엄")){
+						float test = Float.parseFloat(price);
+						tempPrice = test * (float)1.4;
+						price = Integer.toString((int)tempPrice);
+					}
 					if(dao.insert(conn, "INSERT INTO "
 							+"SCHEDULE_INFO(SCHEDULE_NO, DEPARTURE_TERMINAL, ARRIVAL_TERMINAL, BUS_NO, DEPARTURE_TIME, PRICE, REQUIRED_TIME) "
 							+"VALUES(SCHEDULE_NO.NEXTVAL,'"+SINFO.getFK_departureTerminal()+"','"+SINFO.getFK_arrivalTerminal()+"',"+SINFO.getFK_busNo()
-							+",'"+SINFO.getDepartureTime()+"','"+SINFO.getPrice()+"','"+SINFO.getRequiredTime()+"')"))
+							+",'"+SINFO.getDepartureTime()+"','"+price+"','"+SINFO.getRequiredTime()+"')"))
 					{
 						
 						/*
