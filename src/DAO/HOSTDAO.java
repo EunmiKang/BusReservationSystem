@@ -2,6 +2,7 @@ package DAO;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class HOSTDAO {
@@ -219,15 +220,7 @@ public class HOSTDAO {
 		return null;
 	}
 	
-	public String returnOriginSeatNum(String busClass){
-		if(busClass.equals("100"))
-			return "45";
-		else if(busClass.equals("010"))
-			return "35";
-		else
-			return "25";
-	}
-	
+
 	public String returnNameOfBusClass(String busClass){
 		if(busClass.equals("100"))
 			return "일반";
@@ -244,6 +237,10 @@ public class HOSTDAO {
 		DAO dao = new DAO();
 		dao.createConn();
 		conn = dao.getConn();	
+		String price="";
+		float tempPrice;
+		HOSTDAO hostDao = new HOSTDAO(null, null);
+		
 		
 		try {
 			rs = dao.select(conn, "SELECT * FROM SCHEDULE_INFO "
@@ -252,15 +249,34 @@ public class HOSTDAO {
 					+"' AND DEPARTURE_TIME = '"+SINFO.getDepartureTime()+"'");
 			if(!SINFO.getFK_arrivalTerminal().equals("선택")&&!SINFO.getFK_arrivalTerminal().equals("null"))
 			{
+				price = SINFO.getPrice();
 				if(rs.next()==false){
+					if(SINFO.getFK_busNo().equals("1")){
+						float test = Float.parseFloat(price);
+						tempPrice = test * (float)1.2;
+						price = Integer.toString((int)tempPrice);
+					}else if(SINFO.getFK_busNo().equals("프리미엄")){
+						float test = Float.parseFloat(price);
+						tempPrice = test * (float)1.4;
+						price = Integer.toString((int)tempPrice);
+					}
 					if(dao.insert(conn, "INSERT INTO "
 							+"SCHEDULE_INFO(SCHEDULE_NO, DEPARTURE_TERMINAL, ARRIVAL_TERMINAL, BUS_NO, DEPARTURE_TIME, PRICE, REQUIRED_TIME) "
 							+"VALUES(SCHEDULE_NO.NEXTVAL,'"+SINFO.getFK_departureTerminal()+"','"+SINFO.getFK_arrivalTerminal()+"',"+SINFO.getFK_busNo()
-							+",'"+SINFO.getDepartureTime()+"','"+SINFO.getPrice()+"','"+SINFO.getRequiredTime()+"')")){
+							+",'"+SINFO.getDepartureTime()+"','"+price+"','"+SINFO.getRequiredTime()+"')"))
+					{
 						
+						/*
+						 * RESERVATIONSTATUS 객체를 만들어서 넣자
+						 */
 						
-						return true;	
+						if(dao.insert(conn, "INSERT INTO RESERVATION_STATUS_TABLE(SCHEDULE_NO, DEPARTURE_DATE, SEAT_INFO, REMAINING_SEATS_NUM) "
+								+ "VALUES(SCHEDULE_NO.CURRVAL,'"+getToday(0)+"','"+getSeatInfo(SINFO.getFK_busNo())+"',"+getSeatNumtoBusNo(SINFO.getFK_busNo())+")"))
+						{
+							
+							return true;
 						}
+					}
 					
 				}
 			}
@@ -269,6 +285,45 @@ public class HOSTDAO {
 			System.out.println("[*]	insertSchedule INSERT error: \n" + e.getMessage());
 		}
 		return false;
+	}
+	
+	public String getToday(int day){
+		SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy-MM-dd", Locale.KOREA );
+	      Date currentTime = new Date ( );
+	      Date tmTime = new Date();
+	      String mTime = mSimpleDateFormat.format ( currentTime );
+	      tmTime.setTime(currentTime.getTime() + (1000*60*60*24)*day);
+	      return mTime;
+	}
+	
+	public String getSeatInfo(String BusNo){
+		String seatInfo="";
+		if(BusNo.equals("1"))
+			seatInfo = 	"0000000"+
+						"0000000"+
+						"0000000"+
+						"0000000";
+		
+		else if(BusNo.equals("2"))
+			seatInfo = 	"0000000"+
+						"0000000"+
+						"0000000";
+		
+		else
+			seatInfo = 	"0000000"+
+						"0000000";
+		return seatInfo;
+	}
+	
+	public int getSeatNumtoBusNo(String BusNo){
+		int seatNo = 0;
+		if(BusNo.equals("1"))
+			seatNo = 28;
+		else if(BusNo.equals("2"))
+			seatNo = 21;
+		else
+			seatNo = 14;
+		return seatNo;
 	}
 	
 	public boolean deleteSchedule(String departure, String arrival, String departureTime){

@@ -8,7 +8,7 @@
 	String HOSTID = (String)session.getAttribute("ID");
 	String HOSTPW = (String)session.getAttribute("PW");	
 	boolean result = false;
-
+	float tempPrice=0;
 	String departure = (String) request.getParameter("departureResult");
 	String arrival = (String) request.getParameter("arrivalResult");
 	String departureTime = (String) request.getParameter("departureTime");
@@ -23,6 +23,7 @@
 	SCHEDULEINFO SINFO = new SCHEDULEINFO("", departure,arrival,hostDao.returnBusNo(busClass),
 											departureTime,
 											price,requiredTime);
+	
 	result = hostDao.insertSchedule(SINFO);
 	
 %>
