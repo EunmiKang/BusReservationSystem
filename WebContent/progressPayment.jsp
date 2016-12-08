@@ -16,7 +16,15 @@
 	String ticketingWay = request.getParameter("_ticketing_");
 	
 	USERDAO userDAO = new USERDAO(ID, PW);
-	if(userDAO.registrationReservation(ID, PW, departure, arrival, departureDate, departureTime, seatInfo, usePoint, ticketingWay)) {
+	if(userDAO.registrationReservation(ID,
+			PW,
+			departure,
+			arrival,
+			departureDate,
+			departureTime,
+			seatInfo,
+			usePoint,
+			ticketingWay)) {
 		if(userDAO.updatePoint(ID, usePoint)) {
 			if(userDAO.updateSeat(departure, arrival, departureDate, departureTime, busClass, seatInfo)) {
 				%>

@@ -167,7 +167,7 @@
 			</div>
 			
 			<div class="div10">
-				<form action="progressPayment.jsp" method="post">
+				<form id ="progress" action="progressPayment.jsp" method="post">
 				<table>
 					<tr>
 						<td class="left" >가격</td>
@@ -188,7 +188,7 @@
 					<tr>
 					<td class="left">티켓팅</td>
 					<td>
-						<select name="ticketing" name="_ticketing_" form="" class="right">
+						<select name="_ticketing_" form="progress" class="right">
 						<option value='현장발권'>현장 발권</option>
 						<option value='e-티켓'>e - 티켓</option>
 					</tr>

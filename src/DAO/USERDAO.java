@@ -428,7 +428,7 @@ public List<RESERVATIONSTATUS> returnStatusList2(RESERVATIONSTATUS reStatus){
             
             dao.insert(conn, "INSERT INTO RESERVATION "
                   + "VALUES(RESERVATION_NO.NEXTVAL, '" + ID +"', '" + departureDate + "', " 
-                  + rs.getString("SCHEDULE_NO") + ", " + seatNo);
+                  + rs.getInt("SCHEDULE_NO") + ", " + seatNo);
             
             dao.insert(conn, "INSERT INTO PAYMENT "
                   + "VALUES(RESERVATION_NO.CURRVAL, '" + ticketingWay + "', '" 
