@@ -10,6 +10,7 @@
 	String departureTime = request.getParameter("departureTime_" + index);
 	String[] departure_time = departureTime.split(":");
 	String busClass = request.getParameter("busclass_" + index);
+	session.setAttribute("S_busClass", busClass);
 	String seatInfo = request.getParameter("seatInfo_" + index);
 	String[] seatInfoArray = seatInfo.split("");
 	String price = request.getParameter("price_" + index);

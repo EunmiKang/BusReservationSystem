@@ -73,30 +73,23 @@ public class SCHEDULEINFO {
 	}
 	
 	public String returnBusClass(String busNo){
-
-		Connection conn = null;
-		ResultSet rs = null;
-		
-		DAO dao = new DAO();
-		dao.createConn();
-		conn = dao.getConn();	
-		
-		try {
-			rs = dao.select(conn, "SELECT BUSCLASS FROM BUS WHERE BUSNO = \'"+busNo+"\'");
-			if(rs.next()==true)
-			{
-				dao.cancel();
-				return rs.getString("BUSCLASS");
-			}
-			else
-			{
-				dao.cancel();
-				return null;
-			}
-		} catch (Exception e) {
-			System.out.println("[*]	returnBusClass SELECT error: \n" + e.getMessage());
-		}
-		dao.cancel();
-		return null;
-	}
+	      Connection conn = null;
+	      ResultSet rs = null;
+	      
+	      DAO dao = new DAO();
+	      dao.createConn();
+	      conn = dao.getConn();   
+	      
+	      try {
+	         rs = dao.select(conn, "SELECT BUSCLASS FROM BUS WHERE BUSNO = " + busNo);
+	         rs.next();
+	         String returnBusClass = rs.getString("BUSCLASS");
+	         dao.cancel();
+	         return returnBusClass;
+	      } catch (Exception e) {
+	         System.out.println("[*]   returnBusClass SELECT error: \n" + e.getMessage());
+	      }
+	      dao.cancel();
+	      return null;
+	   }
 }

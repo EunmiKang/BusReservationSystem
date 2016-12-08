@@ -51,13 +51,13 @@
 				%>
 				<form action="selectSeat.jsp" method="post">
 				<tr>
-					<td><input name = "departure_<%=i%>" class="scheduleData" type="text" readonly value="<%=str[0]%>"></td>
-					<td><input name = "arrival_<%=i%>" class="scheduleData" type="text" readonly value="<%=str[1]%>"></td>
-					<td><input name = "departureDate_<%=i%>" class="scheduleData" type="text" readonly value="<%=str[2]%>"></td>
-					<td><input name = "departureTime_<%=i%>" class="scheduleData" type="text" readonly value="<%=str[3]%>"></td>
-					<td><input name = "seatNum_<%=i%>" class="scheduleData" type="text" readonly value="<%=str[4]%>"></td>
-					<input type="hidden" name = "selectIdx" value = "<%=i%>" >
-					<td><input class = "btn" id="deleteBtn" type="submit" value="예매 취소"/></td>
+					<td><input name="departure_<%=i%>" class="scheduleData" type="text" readonly value="<%=str[0]%>"></td>
+					<td><input name="arrival_<%=i%>" class="scheduleData" type="text" readonly value="<%=str[1]%>"></td>
+					<td><input name="departureDate_<%=i%>" class="scheduleData" type="text" readonly value="<%=str[2]%>"></td>
+					<td><input name="departureTime_<%=i%>" class="scheduleData" type="text" readonly value="<%=str[3]%>"></td>
+					<td><input name="seatNum_<%=i%>" class="scheduleData" type="text" readonly value="<%=str[4]%>"></td>
+					<input type="hidden" name="selectIdx" value = "<%=i%>" >
+					<td><input class="btn" id="deleteBtn" type="submit" value="예매 취소"/></td>
 				</tr>
 				</form>
 				<%
