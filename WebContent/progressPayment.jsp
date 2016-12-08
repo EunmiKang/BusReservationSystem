@@ -30,7 +30,7 @@
 				%>
 				<script>
 					alert("예매 되었습니다.");
-					location.href = "";
+					location.href = "reservationHistory.jsp";
 				</script>
 				<%
 			}

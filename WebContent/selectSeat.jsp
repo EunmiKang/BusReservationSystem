@@ -12,7 +12,6 @@
 	String busClass = request.getParameter("busclass_" + index);
 	session.setAttribute("S_busClass", busClass);
 	String seatInfo = request.getParameter("seatInfo_" + index);
-	session.setAttribute("S_seatInfo", seatInfo);
 	String[] seatInfoArray = seatInfo.split("");
 	String price = request.getParameter("price_" + index);
 	
