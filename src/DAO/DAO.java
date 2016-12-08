@@ -242,4 +242,27 @@ public List<RESERVATIONSTATUS> returnStatusList2(RESERVATIONSTATUS reStatus){
 		else
 			return "프리미엄";
 	}
+	
+	public String returnSeatInfo(String a){
+		if(a.equals("1"))
+			return "여성 어른";
+		else if(a.equals("2"))
+		{
+			return "여성 중고생";
+		}
+		else if(a.equals("3"))
+		{
+			return "여성 아동";
+		}
+		else if(a.equals("4"))
+		{
+			return "남성 어른";
+		}
+		else if(a.equals("5"))
+		{
+			return "남성 중고생";
+		}
+		else
+			return "남성 아동";
+		}
 }

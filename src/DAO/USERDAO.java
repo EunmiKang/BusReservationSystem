@@ -393,4 +393,24 @@ public List<RESERVATIONSTATUS> returnStatusList2(RESERVATIONSTATUS reStatus){
 		}
 		return null;
 	}
+	
+	public String returnCurPoint(USERDAO userDao){
+		Connection conn = null;
+		ResultSet rs = null;
+		DAO dao = new DAO();
+		dao.createConn();
+		conn = dao.getConn();
+		try{
+			rs = dao.select(conn, "SELECT * FROM MEMBER WHERE M_ID = '"+userDao.getUSERID()+"'");
+			if(rs.next()!=false){	
+				String a = rs.getString("M_CURRENTPOINT");
+				dao.cancel();
+				return a;
+			}
+		}catch(Exception e){
+			System.out.println("[*] changeUserSetting CHANGE error: \n" + e.getMessage());
+		}
+		dao.cancel();
+		return null;
+	}
 }

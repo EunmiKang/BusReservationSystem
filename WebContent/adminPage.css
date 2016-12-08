@@ -172,3 +172,12 @@ h3 {
 	font-family: 'BM11';
 	cursor: default;
 }
+
+#div4 {
+	display: flex;
+}
+
+#div5 {
+	float:left;
+	display: flex;
+}
