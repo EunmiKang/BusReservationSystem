@@ -1,10 +1,7 @@
 package DAO;
 
-import java.beans.Statement;
-import java.sql.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -182,7 +179,6 @@ public class USERDAO {
 	}
 	
 	public boolean deactivateAccount(){
-		String userInfo=null;
 		Connection conn = null;
 		boolean rs = false;
 		DAO dao = new DAO();
@@ -206,9 +202,7 @@ public class USERDAO {
 	}
 	
 	public boolean changeUserSetting(String changePW, String changePhoneNum){
-		String userInfo=null;
 		Connection conn = null;
-		ResultSet rs = null;
 		DAO dao = new DAO();
 		dao.createConn();
 		conn = dao.getConn();
@@ -225,12 +219,10 @@ public class USERDAO {
 	}
 	
 	public List<RESERVATIONSTATUS> returnStatusList(RESERVATIONSTATUS reStatus){
-		
 		Connection conn = null;
 		String scheduleNo = null;
 		ResultSet rs = null;
 		ResultSet rs2 = null;
-		RESERVATIONSTATUS RSS = null;
 		List<RESERVATIONSTATUS> RSSList = new ArrayList<>();
 		DAO dao = new DAO();
 		dao.createConn();
@@ -306,7 +298,6 @@ public List<RESERVATIONSTATUS> returnStatusList2(RESERVATIONSTATUS reStatus){
 		String scheduleNo = null;
 		ResultSet rs = null;
 		ResultSet rs2 = null;
-		RESERVATIONSTATUS RSS = null;
 		List<RESERVATIONSTATUS> RSSList = new ArrayList<>();
 		DAO dao = new DAO();
 		dao.createConn();
@@ -347,7 +338,6 @@ public List<RESERVATIONSTATUS> returnStatusList2(RESERVATIONSTATUS reStatus){
 		String scheduleNo = null;
 		ResultSet rs = null;
 		ResultSet rs2 = null;
-		RESERVATIONSTATUS RSS = null;
 		List<RESERVATIONINFO> RSIList = new ArrayList<>();
 		DAO dao = new DAO();
 		dao.createConn();
@@ -392,5 +382,135 @@ public List<RESERVATIONSTATUS> returnStatusList2(RESERVATIONSTATUS reStatus){
 			System.out.println("[*]	showReservationInfo error: \n" + e.getMessage());
 		}
 		return null;
+	}
+	
+	public boolean registrationReservation(String ID, String PW, String departure, String arrival,
+											String departureDate, String departureTime, String seatInfo,
+											String usePoint, String ticketingWay){
+		Connection conn = null;
+		ResultSet rs = null;
+		DAO dao = new DAO();
+		dao.createConn();
+		conn = dao.getConn();
+		String[] seatInfoArray = seatInfo.split("/");
+		try{
+			rs = dao.select(conn, "SELECT SCHEDULE_NO FROM SCHEDULE_INFO "
+							+ "WHERE DEPARTURE_TERMINAL = '" + departure + "'AND "
+							+ "ARRIVAL_TERMINAL = '" + arrival + "' AND DEPARTURE_TIME = '" + departureTime + "'");
+			
+			if(rs.next() != false) {
+				String seatNo = "";
+				String[] seatInfoIns = new String[2];
+				for(int i=0; i<seatInfoArray.length; i++) {
+					seatInfoIns = seatInfoArray[i].split("_");
+					seatNo += seatInfoIns[0];
+				}
+				
+				dao.insert(conn, "INSERT INTO RESERVATION "
+						+ "VALUES(RESERVATION_NO.NEXTVAL, '" + ID +"', '" + departureDate + "', " 
+						+ rs.getString("SCHEDULE_NO") + ", " + seatNo);
+				
+				dao.insert(conn, "INSERT INTO PAYMENT "
+						+ "VALUES(RESERVATION_NO.CURRVAL, '" + ticketingWay + "', '" 
+						+ usePoint + "', '" + ID + "'");
+			}
+			dao.cancel();
+			return true;
+		}catch(Exception e){
+			System.out.println("[*] returnStatusList error: \n" + e.getMessage());
+		}
+		dao.cancel();
+		return false;
+	}
+	
+	public boolean updatePoint(String ID, String usePoint) {
+		Connection conn = null;
+		ResultSet rs = null;
+		DAO dao = new DAO();
+		dao.createConn();
+		conn = dao.getConn();
+		try{
+			rs = dao.select(conn, "SELECT * FROM MEMBER WHERE M_ID = '" + ID + "'");
+			String currentPoint = rs.getString("M_CURRENTPOINT");
+			String totalPoint = rs.getString("M_TOTALPOINT");
+			if(rs.next() != false) {
+				if(!usePoint.equals("0")) {
+					int intCurrentPoint = Integer.parseInt(currentPoint) - Integer.parseInt(usePoint) + 100;
+					int intTotalPoint = Integer.parseInt(totalPoint) + 100;
+					
+					dao.updateBranch(conn, "MEMBER", "M_CURRENTPOINT", Integer.toString(intCurrentPoint), "M_ID = '" + ID +"'");
+					dao.updateBranch(conn, "MEMBER", "M_TOTALPOINT", Integer.toString(intTotalPoint), "M_ID = '"+ ID +"'");
+					
+					return true;
+				}
+				else {
+					int intCurrentPoint = Integer.parseInt(currentPoint) + 100;
+					int intTotalPoint = Integer.parseInt(totalPoint) + 100;
+					
+					dao.updateBranch(conn, "MEMBER", "M_CURRENTPOINT", Integer.toString(intCurrentPoint), "M_ID = '" + ID +"'");
+					dao.updateBranch(conn, "MEMBER", "M_TOTALPOINT", Integer.toString(intTotalPoint), "M_ID = '"+ ID +"'");
+					return true;
+				}
+			}
+			dao.cancel();
+			return true;
+		}catch(Exception e){
+			System.out.println("[*] returnStatusList error: \n" + e.getMessage());
+		}
+		dao.cancel();
+		return false;
+	}
+	
+	public boolean updateSeat(String departure, String arrival, String departureDate, String departureTime, String busClass, String seatInfo) {
+		Connection conn = null;
+		ResultSet rs = null;
+		ResultSet rs2 = null;
+		DAO dao = new DAO();
+		dao.createConn();
+		conn = dao.getConn();
+		String[] seatInfoArray = seatInfo.split("/");
+		String newSeatInfo ="";
+		int newRemainingSeatsNum;
+		try{
+			rs = dao.select(conn, "SELECT SCHEDULE_NO FROM SCHEDULE_INFO "
+					+ "WHERE DEPARTURE_TERMINAL = '" + departure + "'AND "
+					+ "ARRIVAL_TERMINAL = '" + arrival + "' AND DEPARTURE_TIME = '" + departureTime + "'");
+			rs2 = dao.select(conn, "SELECT * FROM RESERVATION_STATUS_TABLE "
+					+ "WHERE SCHEDULE_NO = " + rs.getString("SCHEDULE_NO") + " "
+							+ "AND DEPARTURE_DATE = '" + departureDate + "'");
+			if(rs.next() != false) {
+				String[] seatInfoIns = new String[2];
+				String[] originSeatInfo = rs2.getString("SEAT_INFO").split("");
+				
+				for(int i=0; i<seatInfoArray.length; i++) {
+					seatInfoIns = seatInfoArray[i].split("_");
+					if(busClass.equals("일반")) {
+						for(int j=0; j<28; j++) {
+							if((j+1) == Integer.parseInt(seatInfoIns[0])) {
+								newSeatInfo += seatInfoIns[1];
+							}
+							else {
+								newSeatInfo += originSeatInfo[i];
+							}
+						}
+					}
+				}
+				
+				dao.updateBranch(conn, "RESERVATION_STATUS_TABLE", "SEAT_INFO", newSeatInfo, 
+						"SCHEDULE_NO = " + rs.getString("SCHEDULE_NO") + " "
+						+ "AND DEPARTURE_DATE = '" + departureDate + "'");
+				
+				newRemainingSeatsNum = Integer.parseInt(rs2.getString("REMAINING_SEATS_NUM")) - seatInfoArray.length;
+				dao.updateBranch(conn, "RESERVATION_STATUS_TABLE", "REMAINING_SEATS_NUM", Integer.toString(newRemainingSeatsNum), 
+						"SCHEDULE_NO = " + rs.getString("SCHEDULE_NO") + " "
+						+ "AND DEPARTURE_DATE = '" + departureDate + "'");
+			}
+			dao.cancel();
+			return true;
+		}catch(Exception e){
+			System.out.println("[*] returnStatusList error: \n" + e.getMessage());
+		}
+		dao.cancel();
+		return false;
 	}
 }
