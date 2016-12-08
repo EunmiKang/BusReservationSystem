@@ -515,6 +515,26 @@ public List<RESERVATIONSTATUS> returnStatusList2(RESERVATIONSTATUS reStatus){
                           }
                        }
                     }
+                    else if(busClass.equals("우등")) {
+                    	for(int j=0; j<21; j++) {
+                    		if((j+1) == Integer.parseInt(seatInfoIns[0])) {
+                    			newSeatInfo += seatInfoIns[1];
+                    		}
+                    		else {
+                    			newSeatInfo += originSeatInfo[i];
+                    		}
+                    	}
+                    }
+                    else if(busClass.equals("프리미엄")) {
+                    	for(int j=0; j<14; j++) {
+                    		if((j+1) == Integer.parseInt(seatInfoIns[0])) {
+                    			newSeatInfo += seatInfoIns[1];
+                    		}
+                    		else {
+                    			newSeatInfo += originSeatInfo[i];
+                    		}
+                    	}
+                    }
                  }
                  
                  dao.updateBranch(conn, "RESERVATION_STATUS_TABLE", "SEAT_INFO", newSeatInfo, 
