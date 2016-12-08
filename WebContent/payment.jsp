@@ -144,6 +144,7 @@
 			</table>
 			</div>
 			<div>
+			<form action="progressPayment.jsp" method="post">
 			<table>
 				<tr>
 					<td class="left" >가격</td>
@@ -161,8 +162,18 @@
 					<td class="left" >결제금액</td>
 					<td><input id="_payprice_" type='text' readonly value="<%=price%>"></td>
 				</tr>
-				
+				<tr>
+				<td class="left">티켓팅</td>
+				<td>
+					<select name="ticketing" form="" class="right">
+					<option value='현장발권'>현장 발권</option>
+					<option value='e-티켓'>e - 티켓</option>
+				</tr>
+				<tr>
+				<td></td>
+				<td><input class = "btn" id="paymentBtn" type="submit" value="결제"/></td>
 			</table>
+			</form>
 		</div>
 	</div>
 </body>
