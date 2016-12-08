@@ -145,6 +145,8 @@ span {
 #selectSeatInfoTable {
 	/*display: none;*/
 	visibility: hidden;
+	font-family: 'BM11';
+	border: 2px solid black;
 }
 
 #pTotal {
@@ -169,7 +171,7 @@ span {
 	float: right;
 }
 
-#submitBtn:hover, #numberBtn:hover {
+#submitBtn:hover, .btn:hover {
 	background-color: white;
 	border: 2px solid #cce6ff;
 	cursor: pointer;
@@ -179,7 +181,7 @@ span {
 	font-size: 15pt;
 }
 
-#numberBtn {
+.btn {
 	width: 50px;
 	height: 30px;
 	font-family: 'BM11';

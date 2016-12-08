@@ -97,12 +97,7 @@
 				alert("좌석을 선택해주세요.");
 				var totalPrice = (<%=price%> * check1) +  (<%=price2%> * check2) + (<%=price3%> * check3);
 				document.getElementById("totalPrice").value = totalPrice;
-				//cal(check1, check2, check3);
 			}
-		}
-		
-		function cal(c1, c2, c3) {
-			
 		}
 		
 		function showSeatInfo(seat) {
@@ -177,7 +172,17 @@
 						document.getElementById(selectSeatNo).className = "selectedSeat";
 					}
 				}
+				
 				document.getElementById("selectSeatInfoTable").style.visibility = "hidden";
+			}
+		}
+		
+		function finalCheck() {
+			if(selectNum > selectSeatNum) {
+				alert("좌석을 덜 선택하셨습니다.");
+			}
+			else {
+				document.getElementById('selectSeatForm').submit();
 			}
 		}
 	</script>
@@ -197,7 +202,6 @@
 			<td class="trtd"><%=departure_time[0]%>시 <%=departure_time[1]%>분</td>
 		</tr>
 	</table>
-	<form action="payment.jsp" method="post">
 	<div id="div1">
 		<div id="div2">
 			<div id="div3">
@@ -225,7 +229,7 @@
 					</tr>
 					<tr>
 						<td colspan="2" style="text-align: center;">
-							<button id="numberBtn" onclick="check()">확인</button>
+							<button class="btn" onclick="check()">확인</button>
 						</td>
 					</tr>
 				</table>
@@ -255,7 +259,12 @@
 					<tr id="pTotal">
 						<td id="totalText" class="left">합계</td>
 						<td>
+							<form id="selectSeatForm" action="payment.jsp" method="post">
 							<input class="leftData" id="totalPrice" name="totalPrice" type="text" readonly/>원
+							<input id="selectSeat1" name="seatInfo1" type="hidden"/>
+							<input id="selectSeat2" name="seatInfo2" type="hidden"/>
+							<input id="selectSeat3" name="seatInfo3" type="hidden"/>
+							</form>
 						</td>
 					</tr>
 				</table>
@@ -372,7 +381,7 @@
 					<%
 				}
 			%>
-			<input id="submitBtn" type="submit" value="확인"/>
+			<input id="submitBtn" type="submit" value="확인" onclick="finalCheck()"/>
 		</div>
 		<div id="div6">
 			<table id="selectSeatInfoTable">
@@ -381,7 +390,7 @@
 					<td><input type="radio" name="age" value="중고생"> 중고생</td>
 					<td><input type="radio" name="age" value="아동"> 아동</td>
 					<td rowspan="2">
-						<button id="okBtn1" onclick="saveInfo()">확인</button>
+						<input type="button" class="btn" value="확인" onclick="saveInfo()"/>
 					</td>
 				</tr>
 				<tr>
@@ -391,9 +400,5 @@
 			</table>
 			</div>
 	</div>
-	<input id="selectSeat1" name="seatInfo1" type="hidden"/>
-	<input id="selectSeat2" name="seatInfo2" type="hidden"/>
-	<input id="selectSeat3" name="seatInfo3" type="hidden"/>
-	</form>
 </body>
 </html>
