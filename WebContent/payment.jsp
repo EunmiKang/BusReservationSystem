@@ -49,13 +49,13 @@
 					<tr>
 						<td class="left"> 출발시간 </td>
 						<td>
-							<input type='text' readonly value="<%=departureTime%>">
+							<input type='text' readonly value="<%=departureTime%> 가격은~<%=price %>">
 						</td>
 					</tr>
 					<tr>
 						<td class="left"> 좌석 </td>
 						<td>
-							<input type='text' readonly value="<%=arrival%>">
+							<input type='text' readonly value="<%=seatStr1%> <%=seatStr2%> <%=seatStr3%>">
 						</td>
 					</tr>
 				</table>

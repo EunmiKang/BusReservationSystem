@@ -31,6 +31,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title> 버스 예매 시스템 </title>
 	<link type="text/css" rel="stylesheet" href="getSchedule.css"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script>
 		var selectNum=0;	//선택한 매수
 		var selectSeatNum=0;		//선택한 자리수
@@ -123,8 +124,12 @@
 				document.getElementById("selectSeatInfoTable").style.visibility = "hidden";
 				alert("이미 선택하신 매수만큼의 좌석을 모두 선택하셨습니다.");
 			} else {
-				var age = document.getElementsByName("age")[0].value;
-				var sex = document.getElementsByName("sex")[0].value;
+				//var age = document.getElementsByName("age")[0].value;
+				//var sex = document.getElementsByName("sex")[0].value;
+				var age = $(":input:radio[name='age']:checked").val();
+				var sex = $(":input:radio[name='sex']:checked").val();
+				alert(age);
+				alert(sex);
 				var value = selectSeatNo + "/";
 				if(sex=="여성") {
 					if(age=="어른") {
@@ -386,7 +391,7 @@
 		<div id="div6">
 			<table id="selectSeatInfoTable">
 				<tr>
-					<td><input type="radio" name="age" value="어른" checked> 어른</td>
+					<td><input type="radio" name="age" value="어른" selected> 어른</td>
 					<td><input type="radio" name="age" value="중고생"> 중고생</td>
 					<td><input type="radio" name="age" value="아동"> 아동</td>
 					<td rowspan="2">
@@ -394,7 +399,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td><input type="radio" name="sex" value="남성" checked> 남성</td>
+					<td><input type="radio" name="sex" value="남성" selected> 남성</td>
 					<td><input type="radio" name="sex" value="여성"> 여성</td>
 				</tr>
 			</table>
