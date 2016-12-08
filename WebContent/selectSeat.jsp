@@ -36,6 +36,12 @@
 		var selectNum=0;	//선택한 매수
 		var selectSeatNum=0;		//선택한 자리수
 		var selectSeatNo;
+		var num1=0;	//선택어른수
+		var num2=0;	//선택중고생수
+		var num3=0;	//선택아동수
+		var select1=0;	//선택어른좌석수
+		var select2=0;	//선택중고생좌석수
+		var select3=0;	//선택아동좌석수
 		
 		function check() {
 			var check = 0;
@@ -44,45 +50,45 @@
 			var check3 = document.getElementById("checkC").value;
 			
 			if(check1 == "0") {
-				check1 = 0;
+				num1 = 0;
 			}
 			else if(check1 == "1") {
-				check1 = 1;
+				num1 = 1;
 			}
 			else if(check1 == "2") {
-				check1 = 2;
+				num1 = 2;
 			}
 			else if(check1 == "3") {
-				check1 = 3;
+				num1 = 3;
 			}
 			
 			if(check2 == "0") {
-				check2 = 0;
+				num2 = 0;
 			}
 			else if(check2 == "1") {
-				check2 = 1;
+				num2 = 1;
 			}
 			else if(check2 == "2") {
-				check2 = 2;
+				num2 = 2;
 			}
 			else if(check2 == "3") {
-				check2 = 3;
+				num2 = 3;
 			}
 			
 			if(check3 == "0") {
-				check3 = 0;
+				num3 = 0;
 			}
 			else if(check3 == "1") {
-				check3 = 1;
+				num3 = 1;
 			}
 			else if(check3 == "2") {
-				check3 = 2;
+				num3 = 2;
 			}
 			else if(check3 == "3") {
-				check3 = 3;
+				num3 = 3;
 			}
 			
-			check = check1 + check2 + check3;
+			check = num1 + num2 + num3;
 			
 			if(check==0) {
 				alert("최소 1매는 선택해주세요.");
@@ -128,53 +134,88 @@
 				//var sex = document.getElementsByName("sex")[0].value;
 				var age = $(":input:radio[name='age']:checked").val();
 				var sex = $(":input:radio[name='sex']:checked").val();
-				alert(age);
-				alert(sex);
+				
 				var value = selectSeatNo + "/";
 				if(sex=="여성") {
 					if(age=="어른") {
-						value += "1";
-						selectSeatNum++;
-						var hiddenId = "selectSeat" + selectSeatNum;
-						document.getElementById(hiddenId).value = value;
-						document.getElementById(selectSeatNo).className = "selectedSeat";
+						if(select1==num1) {	//선택한 어른 매수만큼 어른의 좌석은 다 선택함 - 어른 좌석 더 추가 못함
+							alert("더이상 어른 좌석은 선택할 수 없습니다.");
+						}
+						else {	//어른 좌석 추가 선택 가능
+							value += "1";
+							selectSeatNum++;	//선택한 총 좌석 수 증가
+							select1++;	//선택한 어른 좌석수 증가
+							var hiddenId = "selectSeat" + selectSeatNum;
+							document.getElementById(hiddenId).value = value;
+							document.getElementById(selectSeatNo).className = "selectedSeat";
+						}
 					}
 					else if(age=="중고생") {
-						value += "2";
-						selectSeatNum++;
-						var hiddenId = "selectSeat" + selectSeatNum;
-						document.getElementById(hiddenId).value = value;
-						document.getElementById(selectSeatNo).className = "selectedSeat";
+						if(select2==num2) {	//선택한 중고생 매수만큼 중고생 좌석은 다 선택함 - 중고생 좌석 더 추가 못함
+							alert("더이상 중고생 좌석은 선택할 수 없습니다.");
+						}
+						else {	//중고생 좌석 추가 선택 가능
+							value += "2";
+							selectSeatNum++;	//선택한 총 좌석 수 증가
+							select2++;	//선택한 중고샏 좌석수 증가
+							var hiddenId = "selectSeat" + selectSeatNum;
+							document.getElementById(hiddenId).value = value;
+							document.getElementById(selectSeatNo).className = "selectedSeat";
+						}
 					}
 					else if(age=="아동") {
-						value += "3";
-						selectSeatNum++;
-						var hiddenId = "selectSeat" + selectSeatNum;
-						document.getElementById(hiddenId).value = value;
-						document.getElementById(selectSeatNo).className = "selectedSeat";
+						if(select3==num3) {	//선택한 아동 매수만큼 아동 좌석은 다 선택함 - 아동 좌석 더 추가 못함
+							alert("더이상 아동 좌석은 선택할 수 없습니다.");
+						}
+						else {	//아동 좌석 추가 선택 가능
+							value += "3";
+							selectSeatNum++;	//선택한 총 좌석 수 증가
+							select3++;	//선택한 아동 좌석수 증가
+							var hiddenId = "selectSeat" + selectSeatNum;
+							document.getElementById(hiddenId).value = value;
+							document.getElementById(selectSeatNo).className = "selectedSeat";
+						}
 					}
 				}
 				else if(sex=="남성") {
 					if(age=="어른") {
-						value += "4";
-						selectSeatNum++;
-						var hiddenId = "selectSeat" + selectSeatNum;
-						document.getElementById(hiddenId).value = value;
-						document.getElementById(selectSeatNo).className = "selectedSeat";
+						if(select1==num1) {	//선택한 어른 매수만큼 어른의 좌석은 다 선택함 - 어른 좌석 더 추가 못함
+							alert("더이상 어른 좌석은 선택할 수 없습니다.");
+						}
+						else {	//어른 좌석 추가 선택 가능
+							value += "4";
+							selectSeatNum++;	//선택한 총 좌석 수 증가
+							select1++;	//선택한 어른 좌석수 증가
+							var hiddenId = "selectSeat" + selectSeatNum;
+							document.getElementById(hiddenId).value = value;
+							document.getElementById(selectSeatNo).className = "selectedSeat";
+						}
 					}
 					else if(age=="중고생") {
-						value += "5";
-						selectSeatNum++;
-						var hiddenId = "selectSeat" + selectSeatNum;
-						document.getElementById(hiddenId).value = value;
-						document.getElementById(selectSeatNo).className = "selectedSeat";
+						if(select2==num2) {	//선택한 중고생 매수만큼 중고생 좌석은 다 선택함 - 중고생 좌석 더 추가 못함
+							alert("더이상 중고생 좌석은 선택할 수 없습니다.");
+						}
+						else {	//중고생 좌석 추가 선택 가능
+							value += "5";
+							selectSeatNum++;	//선택한 총 좌석 수 증가
+							select2++;	//선택한 중고샏 좌석수 증가
+							var hiddenId = "selectSeat" + selectSeatNum;
+							document.getElementById(hiddenId).value = value;
+							document.getElementById(selectSeatNo).className = "selectedSeat";
+						}
 					}
 					else if(age=="아동") {
-						value += "6";
-						selectSeatNum++;
-						var hiddenId = "selectSeat" + selectSeatNum;
-						document.getElementById(hiddenId).value = value;
-						document.getElementById(selectSeatNo).className = "selectedSeat";
+						if(select3==num3) {	//선택한 아동 매수만큼 아동 좌석은 다 선택함 - 아동 좌석 더 추가 못함
+							alert("더이상 아동 좌석은 선택할 수 없습니다.");
+						}
+						else {	//아동 좌석 추가 선택 가능
+							value += "6";
+							selectSeatNum++;	//선택한 총 좌석 수 증가
+							select3++;	//선택한 아동 좌석수 증가
+							var hiddenId = "selectSeat" + selectSeatNum;
+							document.getElementById(hiddenId).value = value;
+							document.getElementById(selectSeatNo).className = "selectedSeat";
+						}
 					}
 				}
 				
