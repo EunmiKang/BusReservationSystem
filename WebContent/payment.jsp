@@ -17,6 +17,7 @@
 	String seatStr2 = request.getParameter("seatInfo2");
 	String seatStr3 = request.getParameter("seatInfo3");
 	String price = request.getParameter("totalPrice");
+	String sentStr = "";
 	DAO dao = new DAO();
 	USERDAO userDao = new USERDAO(ID, PW);
 	int curpoint=0;
@@ -30,21 +31,25 @@
 	String str31="";
 	String str32="";
 	if(seatStr1!=null || seatStr2!=null || seatStr3 != null){
-	if(seatStr1!=""){
-		seatL1 = seatStr1.split("/");
-		str11 = seatL1[0];
-		str12 = dao.returnSeatInfo(seatL1[1]);
-	}
-	if(seatStr2!=""){
-		seatL2 = seatStr2.split("/");
-		str21 = seatL2[0];
-		str22 = dao.returnSeatInfo(seatL2[1]);
-	}
-	if(seatStr3!=""){
-		seatL3 = seatStr3.split("/");
-		str31 = seatL3[0];
-		str32 = dao.returnSeatInfo(seatL3[1]);
-	}
+		if(seatStr1!=""){
+			seatL1 = seatStr1.split("/");
+			str11 = seatL1[0];
+			str12 = dao.returnSeatInfo(seatL1[1]);
+			sentStr = seatL1[0]+"_"+seatL1[1];
+		}
+		if(seatStr2!=""){
+			seatL2 = seatStr2.split("/");
+			str21 = seatL2[0];
+			str22 = dao.returnSeatInfo(seatL2[1]);
+			sentStr = "/"+seatL2[0]+"_"+seatL2[1];
+		}
+		if(seatStr3!=""){
+			seatL3 = seatStr3.split("/");
+			str31 = seatL3[0];
+			str32 = dao.returnSeatInfo(seatL3[1]);
+			sentStr = "/"+seatL3[0]+"_"+seatL3[1];
+		}
+		session.setAttribute("S_seatInfo",sentStr);
 	}
 	curpoint = Integer.parseInt(userDao.returnCurPoint(userDao));
 %>

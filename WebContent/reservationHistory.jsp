@@ -49,7 +49,7 @@
 				str = reservationInfoStr.split(" ");
 				
 				%>
-				<form action="selectSeat.jsp" method="post">
+				<form action="deleteReservation.jsp" method="post">
 				<tr>
 					<td><input name="departure_<%=i%>" class="scheduleData" type="text" readonly value="<%=str[0]%>"></td>
 					<td><input name="arrival_<%=i%>" class="scheduleData" type="text" readonly value="<%=str[1]%>"></td>
