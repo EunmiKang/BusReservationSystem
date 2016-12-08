@@ -391,7 +391,7 @@
 		<div id="div6">
 			<table id="selectSeatInfoTable">
 				<tr>
-					<td><input type="radio" name="age" value="어른" selected> 어른</td>
+					<td><input type="radio" name="age" value="어른" checked> 어른</td>
 					<td><input type="radio" name="age" value="중고생"> 중고생</td>
 					<td><input type="radio" name="age" value="아동"> 아동</td>
 					<td rowspan="2">
@@ -399,8 +399,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td><input type="radio" name="sex" value="남성" selected> 남성</td>
-					<td><input type="radio" name="sex" value="여성"> 여성</td>
+					<td><input type="radio" name="sex" value="여성" checked> 여성</td>
+					<td><input type="radio" name="sex" value="남성"> 남성</td>
 				</tr>
 			</table>
 			</div>
