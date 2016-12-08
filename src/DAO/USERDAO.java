@@ -415,7 +415,7 @@ public List<RESERVATIONSTATUS> returnStatusList2(RESERVATIONSTATUS reStatus){
       String[] seatInfoArray = seatInfo.split("/");
       try{
          rs = dao.select(conn, "SELECT SCHEDULE_NO FROM SCHEDULE_INFO "
-                     + "WHERE DEPARTURE_TERMINAL = '" + departure + "'AND "
+                     + "WHERE DEPARTURE_TERMINAL = '" + departure + "' AND "
                      + "ARRIVAL_TERMINAL = '" + arrival + "' AND DEPARTURE_TIME = '" + departureTime + "'");
          
          if(rs.next() != false) {
@@ -428,11 +428,11 @@ public List<RESERVATIONSTATUS> returnStatusList2(RESERVATIONSTATUS reStatus){
             
             dao.insert(conn, "INSERT INTO RESERVATION "
                   + "VALUES(RESERVATION_NO.NEXTVAL, '" + ID +"', '" + departureDate + "', " 
-                  + rs.getInt("SCHEDULE_NO") + ", " + seatNo);
+                  + rs.getInt("SCHEDULE_NO") + ", '" + seatNo + "')");
             
             dao.insert(conn, "INSERT INTO PAYMENT "
                   + "VALUES(RESERVATION_NO.CURRVAL, '" + ticketingWay + "', '" 
-                  + usePoint + "', '" + ID + "'");
+                  + usePoint + "', '" + ID + "')");
          }
          dao.cancel();
          return true;
@@ -451,9 +451,9 @@ public List<RESERVATIONSTATUS> returnStatusList2(RESERVATIONSTATUS reStatus){
       conn = dao.getConn();
       try{
          rs = dao.select(conn, "SELECT * FROM MEMBER WHERE M_ID = '" + ID + "'");
-         String currentPoint = rs.getString("M_CURRENTPOINT");
-         String totalPoint = rs.getString("M_TOTALPOINT");
          if(rs.next() != false) {
+        	String currentPoint = rs.getString("M_CURRENTPOINT");
+            String totalPoint = rs.getString("M_TOTALPOINT");
             if(!usePoint.equals("0")) {
                int intCurrentPoint = Integer.parseInt(currentPoint) - Integer.parseInt(usePoint) + 100;
                int intTotalPoint = Integer.parseInt(totalPoint) + 100;
@@ -495,10 +495,10 @@ public List<RESERVATIONSTATUS> returnStatusList2(RESERVATIONSTATUS reStatus){
          rs = dao.select(conn, "SELECT SCHEDULE_NO FROM SCHEDULE_INFO "
                + "WHERE DEPARTURE_TERMINAL = '" + departure + "'AND "
                + "ARRIVAL_TERMINAL = '" + arrival + "' AND DEPARTURE_TIME = '" + departureTime + "'");
-         rs2 = dao.select(conn, "SELECT * FROM RESERVATION_STATUS_TABLE "
-               + "WHERE SCHEDULE_NO = " + rs.getString("SCHEDULE_NO") + " "
-                     + "AND DEPARTURE_DATE = '" + departureDate + "'");
          if(rs.next() != false) {
+        	 rs2 = dao.select(conn, "SELECT * FROM RESERVATION_STATUS_TABLE "
+                     + "WHERE SCHEDULE_NO = " + rs.getString("SCHEDULE_NO") + " "
+                           + "AND DEPARTURE_DATE = '" + departureDate + "'");
         	 if(rs2.next() != false) {
         		 String[] seatInfoIns = new String[2];
                  String[] originSeatInfo = rs2.getString("SEAT_INFO").split("");
