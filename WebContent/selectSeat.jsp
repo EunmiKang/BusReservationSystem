@@ -306,12 +306,12 @@
 					<tr id="pTotal">
 						<td id="totalText" class="left">합계</td>
 						<td>
-							<form id="selectSeatForm" action="payment.jsp" method="post">
-							<input class="leftData" id="totalPrice" name="totalPrice" type="text" readonly/>원
-							<input id="selectSeat1" name="seatInfo1" type="hidden"/>
-							<input id="selectSeat2" name="seatInfo2" type="hidden"/>
-							<input id="selectSeat3" name="seatInfo3" type="hidden"/>
-							</form>
+						<form id="selectSeatForm" action="payment.jsp" method="post">
+						<input class="leftData" id="totalPrice" name="totalPrice" type="text" readonly/>원
+						<input id="selectSeat1" name="seatInfo1" type="hidden"/>
+						<input id="selectSeat2" name="seatInfo2" type="hidden"/>
+						<input id="selectSeat3" name="seatInfo3" type="hidden"/>
+						</form>
 						</td>
 					</tr>
 				</table>

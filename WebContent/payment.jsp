@@ -41,13 +41,13 @@
 			seatL2 = seatStr2.split("/");
 			str21 = seatL2[0];
 			str22 = dao.returnSeatInfo(seatL2[1]);
-			sentStr = "/"+seatL2[0]+"_"+seatL2[1];
+			sentStr += "/"+seatL2[0]+"_"+seatL2[1];
 		}
 		if(seatStr3!=""){
 			seatL3 = seatStr3.split("/");
 			str31 = seatL3[0];
 			str32 = dao.returnSeatInfo(seatL3[1]);
-			sentStr = "/"+seatL3[0]+"_"+seatL3[1];
+			sentStr += "/"+seatL3[0]+"_"+seatL3[1];
 		}
 		session.setAttribute("S_seatInfo",sentStr);
 	}

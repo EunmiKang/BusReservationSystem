@@ -45,6 +45,7 @@ body {
 }
 
 .seatText {
+	background-color : wheat;
 	width: 70px;
 	margin: 5px;
 	border-collapse: collapse;
