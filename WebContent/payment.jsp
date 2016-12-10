@@ -86,7 +86,7 @@
 	function check(){
 		if(a==1){
 			alert("결제금액을 확인해 주세요");
-			history.go(-1);	
+			history.go(0);	
 		}
 		else{
 			location.href = "payment.jsp";

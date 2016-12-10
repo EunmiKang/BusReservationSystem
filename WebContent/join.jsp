@@ -24,7 +24,7 @@
 	String name = request.getParameter("nameInput");
 	String phoneNum = request.getParameter("PhoneNum");
 	
-	USERDAO userDAO = new USERDAO(ID, PW, name, phoneNum, "0", "0");
+	USERDAO userDAO = new USERDAO(ID, PW, name, phoneNum, 0, 0);
 	if(userDAO.userJoin() == false){
 		%>
 		<script>

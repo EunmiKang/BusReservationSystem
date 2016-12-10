@@ -10,11 +10,11 @@ public class USERDAO {
    private String USERPW = null;
    private String USERPHONENUM = null;
    private String USERNAME = null;
-   private String USERTOTAL_POINT = null;
-   private String USERCURRENT_POINT = null;
+   private int USERTOTAL_POINT;
+   private int USERCURRENT_POINT;
 
-   public USERDAO(String USERID, String USERPW, String USERNAME, String USERPHONENUM, String USERTOTAL_POINT,
-         String USERCURRENT_POINT) {
+   public USERDAO(String USERID, String USERPW, String USERNAME, String USERPHONENUM, int USERTOTAL_POINT,
+         int USERCURRENT_POINT) {
       super();
       this.USERID = USERID;
       this.USERPW = USERPW;
@@ -62,19 +62,19 @@ public class USERDAO {
       USERNAME = uSERNAME;
    }
 
-   public String getUSERTOTAL_POINT() {
+   public int getUSERTOTAL_POINT() {
       return USERTOTAL_POINT;
    }
 
-   public void setUSERTOTAL_POINT(String uSERTOTAL_POINT) {
+   public void setUSERTOTAL_POINT(int uSERTOTAL_POINT) {
       USERTOTAL_POINT = uSERTOTAL_POINT;
    }
 
-   public String getUSERCURRENT_POINT() {
+   public int getUSERCURRENT_POINT() {
       return USERCURRENT_POINT;
    }
 
-   public void setUSERCURRENT_POINT(String uSERCURRENT_POINT) {
+   public void setUSERCURRENT_POINT(int uSERCURRENT_POINT) {
       USERCURRENT_POINT = uSERCURRENT_POINT;
    }
 
