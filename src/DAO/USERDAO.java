@@ -104,13 +104,13 @@ public class USERDAO {
                   + " VALUES('"+USERID+"','"+USERPW+"','"+USERNAME+"','"+USERPHONENUM+"',0,0)");
    
             }catch(Exception e){
-               System.out.println("[*]   JOIN INSERT error: \n" + e.getMessage());
+               System.out.println("[*]   INSERT error: \n" + e.getMessage());
             }
             dao.cancel();
             return true;
          }
       } catch (Exception e) {
-         System.out.println("[*]   JOIN SELECT error: \n" + e.getMessage());
+         System.out.println("[*]   SELECT error: \n" + e.getMessage());
       }
       dao.cancel();
       return false;
