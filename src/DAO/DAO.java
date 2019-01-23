@@ -15,8 +15,8 @@ public class DAO {
 
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private static final String URL = "jdbc:oracle:thin:@168.188.128.130:1521:DB14";
-	private static final String USER = "DBJS";
-	private static final String PASS = "DBSERVER";
+	private static final String USER = "[USERID]";
+	private static final String PASS = "[USERPW]";
 
 	private static Connection conn = null;
 	private static DatabaseMetaData meta = null;
